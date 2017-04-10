@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE appointmentlist SYSTEM "appointments.dtd">
+
+<appointmentlist when="2/2 - 2/18, 2006"> 
+  <appointment kind="recurs"> 
+    <name>CS331</name> 
+    <days>MWF</days>  
+    <date when="start">01/30/2006</date>  
+    <date when="end">05/12/2006</date> 
+    <time when="start">3:00</time> 
+    <time when="end">4:00</time> 
+  </appointment> 
+  <appointment> 
+    <name>Meet Bob</name> 
+    <date>/02/17/2006</date> 
+    <time when="start">9:00am</time> 
+    <time when="end">10:00am</time> 
+    <info>Meet Bob for Breakfast at the Union</info> 
+  </appointment> 
+</appointmentlist>

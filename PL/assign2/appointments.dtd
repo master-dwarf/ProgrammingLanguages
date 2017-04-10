@@ -1,0 +1,17 @@
+<!ELEMENT appointmentlist (appointment*) >
+<!ATTLIST appointmentlist when CDATA #IMPLIED>
+
+<!ELEMENT appointment (name, days?, (date | date+), (time | time+), info?) >
+<!ATTLIST appointment kind CDATA #IMPLIED>
+
+<!ELEMENT name (#PCDATA) >
+
+<!ELEMENT days (#PCDATA) >
+
+<!ELEMENT date (#PCDATA) >
+<!ATTLIST date when CDATA #IMPLIED>
+
+<!ELEMENT time (#PCDATA)>
+<!ATTLIST time when CDATA #REQUIRED>
+
+<!ELEMENT info (#PCDATA) >
