@@ -10,6 +10,29 @@ var exports = {};
 
 // denoted values in the interpreted language SLang 1
 //  Num, Clo
+function createList(l){
+  return ["List",l];
+}
+function isList(value){
+  return value[0] === "List";
+}
+
+function createBool(b){
+  return ["Bool", b];
+}
+
+function isBool(value){
+  return value[0] === "Bool";
+}
+
+function getBoolValue(value){
+  if (isBool(value)) {
+    return value[1];
+  } else {
+    throw new Error("Interpreter error: "  +
+    "The argument of getBoolValue is not a Bool value.");
+  }
+}
 
 function createNum(n) {
     return ["Num",n];
@@ -84,7 +107,7 @@ function getEnvEnv (env) {
 	return env[2];
     } else {
 	throw new Error("Interpreter error: "  +
-			"The argument of getEnvEnv is not an environment.");	
+			"The argument of getEnvEnv is not an environment.");
     }
 }
 
@@ -139,6 +162,11 @@ exports.lookup = lookup;
 exports.update = update;
 exports.initEnv = initEnv;
 exports.toString = toString;
+exports.createBool = createBool;
+exports.isBool = isBool;
+exports.getBoolValue = getBoolValue;
+exports.createList = createList;
+exports.isList = isList;
 
 window.SLang.env = exports;
 

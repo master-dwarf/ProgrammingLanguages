@@ -115,6 +115,36 @@ function getPrimAppExpArgs(e) {
     }
 }
 
+function createCondExp(n,p,q){
+  return ["CondExp",n,p,q];
+}
+function isCondExp(e){
+  return e[0] === "CondExp";
+}
+function getCondExpIf(e) {
+    if (isCondExp(e)) {
+	return e[1];
+    } else {
+	throw new Error("Interpreter error: "  +
+			"The argument of getCondExpIf is not a CondExp.");
+    }
+}
+function getCondExpThen(e) {
+    if (isCondExp(e)) {
+	return e[2];
+    } else {
+	throw new Error("Interpreter error: "  +
+			"The argument of getCondExpThen is not a CondExp.");
+    }
+}
+function getCondExpElse(e) {
+    if (isCondExp(e)) {
+	return e[3];
+    } else {
+	throw new Error("Interpreter error: "  +
+			"The argument of getCondExpElse is not a CondExp.");
+    }
+}
 
 exports.createProgram = createProgram;
 exports.isProgram = isProgram;
@@ -137,6 +167,11 @@ exports.createPrimAppExp = createPrimAppExp;
 exports.isPrimAppExp = isPrimAppExp;
 exports.getPrimAppExpPrim = getPrimAppExpPrim;
 exports.getPrimAppExpArgs = getPrimAppExpArgs;
+exports.createCondExp = createCondExp;
+exports.isCondExp = isCondExp;
+exports.getCondExpIf = getCondExpIf;
+exports.getCondExpThen = getCondExpThen;
+exports.getCondExpElse = getCondExpElse;
 
 window.SLang.absyn = exports;
 }());

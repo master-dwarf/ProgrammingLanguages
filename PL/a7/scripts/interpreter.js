@@ -39,18 +39,30 @@ function applyPrimitive(prim,args) {
     case "add1":
 	typeCheckPrimitiveOp(prim,args,[E.isNum]);
 	return E.createNum( 1 + E.getNumValue(args[0]) );
-  //   case "%":
-  // typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
-  // return E.createNum( E.getNumValue(args[0]) + E.getNumValue(args[1]));
-  //   case "/":
-  // typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
-  // return E.createNum( E.getNumValue(args[0]) + E.getNumValue(args[1]));
-  //   case "-":
-  // typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
-  // return E.createNum( E.getNumValue(args[0]) + E.getNumValue(args[1]));
-  //   case "~":
-  // typeCheckPrimitiveOp(prim,args,[E.isNum]);
-  // return E.createNum( E.getNumValue(args[0]) );
+    case "%":
+  typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
+  return E.createNum( E.getNumValue(args[0]) % E.getNumValue(args[1]));
+    case "/":
+  typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
+  return E.createNum( E.getNumValue(args[0]) / E.getNumValue(args[1]));
+    case "-":
+  typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
+  return E.createNum( E.getNumValue(args[0]) - E.getNumValue(args[1]));
+    case "~":
+  typeCheckPrimitiveOp(prim,args,[E.isNum]);
+  return E.createNum( -E.getNumValue(args[0]) );
+    case "==":
+  typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
+  return E.createBool(E.getNumValue(args[0]) === E.getNumValue(args[1]) );
+    case "!":
+  typeCheckPrimitiveOp(prim,args,[E.isBool]);
+  return E.createBool( !E.getBoolValue(args[0]) );
+    case "<":
+  typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
+  return E.createBool(E.getNumValue(args[0]) < E.getNumValue(args[1]) );
+    case ">":
+  typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
+  return E.createBool(E.getNumValue(args[0]) > E.getNumValue(args[1]) );
     }
 
 }
@@ -76,7 +88,14 @@ function evalExp(exp,envir) {
         return applyPrimitive(A.getPrimAppExpPrim(exp),
 			      A.getPrimAppExpArgs(exp).map( function(arg) {
                                   return evalExp(arg,envir); } ));
-    } else {
+    } else if(A.isCondExp(exp)){
+        if(E.getBoolValue(evalExp(A.getCondExpIf(exp),envir))){
+          return evalExp(A.getCondExpThen(exp),envir);
+        }
+        else {
+          return evalExp(A.getCondExpElse(exp),envir);
+        }
+    } else{
 	throw "Error: Attempting to evaluate an invalid expression";
     }
 }
