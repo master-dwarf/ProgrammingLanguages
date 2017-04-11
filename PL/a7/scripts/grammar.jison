@@ -74,7 +74,7 @@ cond_exp
 
 list_exp
     : LBRACK int_list RBRACK
-        { $$ = SLang.absyn.createList($2);}
+        { $$ = SLang.absyn.createList($2); }
     ;
 
 int_list

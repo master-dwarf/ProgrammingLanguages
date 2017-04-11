@@ -146,6 +146,10 @@ function getCondExpElse(e) {
     }
 }
 
+function createList(args){
+  return ["List",args];
+}
+
 exports.createProgram = createProgram;
 exports.isProgram = isProgram;
 exports.getProgramExp = getProgramExp;
@@ -172,6 +176,7 @@ exports.isCondExp = isCondExp;
 exports.getCondExpIf = getCondExpIf;
 exports.getCondExpThen = getCondExpThen;
 exports.getCondExpElse = getCondExpElse;
+exports.createList = createList;
 
 window.SLang.absyn = exports;
 }());

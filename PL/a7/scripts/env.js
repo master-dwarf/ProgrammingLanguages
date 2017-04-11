@@ -16,6 +16,15 @@ function createList(l){
 function isList(value){
   return value[0] === "List";
 }
+function getListValue(value){
+  if(isList(value)){
+    return value[1];
+  }
+  else {
+    throw new Error("Interpreter error: "  +
+    "The argument of getListValue is not a list value.");
+  }
+}
 
 function createBool(b){
   return ["Bool", b];
@@ -167,6 +176,7 @@ exports.isBool = isBool;
 exports.getBoolValue = getBoolValue;
 exports.createList = createList;
 exports.isList = isList;
+exports.getListValue = getListValue;
 
 window.SLang.env = exports;
 

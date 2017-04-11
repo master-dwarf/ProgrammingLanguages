@@ -95,7 +95,10 @@ function evalExp(exp,envir) {
         else {
           return evalExp(A.getCondExpElse(exp),envir);
         }
-    } else{
+    } else if(E.isList(exp)){
+        return E.createList(E.getListValue(exp));
+    }
+    else{
 	throw "Error: Attempting to evaluate an invalid expression";
     }
 }
