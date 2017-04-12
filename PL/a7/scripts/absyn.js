@@ -153,7 +153,11 @@ function isList(e){
   return e[0] === "List";
 }
 function sumList(e){
-  return fp.reduce(fp.add,e[1]);
+  var ls = e[1];
+  var num = 0;
+  for(var i=0;i<ls.length;i++)
+    num += ls[i];
+  return num;
 }
 
 exports.createProgram = createProgram;
