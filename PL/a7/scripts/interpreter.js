@@ -63,6 +63,9 @@ function applyPrimitive(prim,args) {
     case ">":
   typeCheckPrimitiveOp(prim,args,[E.isNum,E.isNum]);
   return E.createBool(E.getNumValue(args[0]) > E.getNumValue(args[1]) );
+    case "sumlist":
+  typeCheckPrimitiveOp(prim,args,[E.isList]);
+  return E.createNum(A.sumList(args[0]));
     }
 
 }
@@ -95,8 +98,8 @@ function evalExp(exp,envir) {
         else {
           return evalExp(A.getCondExpElse(exp),envir);
         }
-    } else if(E.isList(exp)){
-        return E.createList(E.getListValue(exp));
+    } else if(A.isList(exp)){
+        return E.createList(E.getList(exp));
     }
     else{
 	throw "Error: Attempting to evaluate an invalid expression";

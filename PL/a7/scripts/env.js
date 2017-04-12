@@ -11,15 +11,15 @@ var exports = {};
 // denoted values in the interpreted language SLang 1
 //  Num, Clo
 function createList(l){
-  return ["List",l];
+  return ["List",l.map(function(x){return parseInt(x);})];
 }
 function isList(value){
   return value[0] === "List";
 }
-function getListValue(value){
+function getList(value){
   if(isList(value)){
     return value[1];
-  }
+    }
   else {
     throw new Error("Interpreter error: "  +
     "The argument of getListValue is not a list value.");
@@ -176,7 +176,7 @@ exports.isBool = isBool;
 exports.getBoolValue = getBoolValue;
 exports.createList = createList;
 exports.isList = isList;
-exports.getListValue = getListValue;
+exports.getList = getList;
 
 window.SLang.env = exports;
 

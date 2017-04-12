@@ -149,6 +149,12 @@ function getCondExpElse(e) {
 function createList(args){
   return ["List",args];
 }
+function isList(e){
+  return e[0] === "List";
+}
+function sumList(e){
+  return fp.reduce(fp.add,e[1]);
+}
 
 exports.createProgram = createProgram;
 exports.isProgram = isProgram;
@@ -177,6 +183,8 @@ exports.getCondExpIf = getCondExpIf;
 exports.getCondExpThen = getCondExpThen;
 exports.getCondExpElse = getCondExpElse;
 exports.createList = createList;
+exports.isList = isList;
+exports.sumList = sumList;
 
 window.SLang.absyn = exports;
 }());
