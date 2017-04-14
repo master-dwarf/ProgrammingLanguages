@@ -14,10 +14,19 @@ LETTER		      [a-zA-Z]
 ")"                   		      { return 'RPAREN'; }
 "+"                   		      { return 'PLUS'; }
 "*"                   		      { return 'TIMES'; }
-"%"                             { return 'MOD';}##
-"/"                             { return 'DIVIDE';}##
-"-"                             { return 'SUB';}##
-"~"                             { return 'NEG';}##
+"%"                             { return 'MOD';}
+"/"                             { return 'DIVIDE';}
+"-"                             { return 'SUB';}
+"~"                             { return 'NEG';}
+"=="                            { return 'EQL'; }
+"!"                             { return 'NOT'; }
+">"                             { return 'GT'; }
+"<"                             { return 'LT'; }
+"?"                             { return 'COND'; }
+"["                             { return 'LBRACK'; }
+"]"                             { return 'RBRACK'; }
+"sumlist"                       { return 'SUMLIST'; }
+"map"                           { return 'MAP'; }
 "add1"                                { return 'ADD1'; }
 ","                   		      { return 'COMMA'; }
 "=>"                   		      { return 'THATRETURNS'; }
@@ -43,6 +52,8 @@ exp
     | fn_exp        { $$ = $1; }
     | app_exp       { $$ = $1; }
     | prim_app_exp  { $$ = $1; }
+    | cond_exp      { $$ = $1; }
+    | list_exp      { $$ = $1; }
     ;
 
 var_exp
@@ -56,6 +67,22 @@ intlit_exp
 fn_exp
     : FN LPAREN formals RPAREN THATRETURNS exp
            { $$ = SLang.absyn.createFnExp($3,$6); }
+    ;
+
+cond_exp
+    : COND LPAREN exp COMMA exp COMMA exp RPAREN
+          { $$ = SLang.absyn.createCondExp($3,$5,$7); }
+    ;
+
+list_exp
+    : LBRACK int_list RBRACK
+        { $$ = SLang.absyn.createList($2); }
+    ;
+
+int_list
+    : /* empty */ {$$ = [];}
+    | INT int_list { $2.unshift($1); $$ = $2; }
+    | COMMA int_list { $$ = $2;}
     ;
 
 formals
@@ -98,6 +125,12 @@ prim_op
     |  DIVIDE   { $$ = $1; }
     |  SUB      { $$ = $1; }
     |  NEG      { $$ = $1; }
+    |  EQL      { $$ = $1; }
+    |  NOT      { $$ = $1; }
+    |  LT       { $$ = $1; }
+    |  GT       { $$ = $1; }
+    |  SUMLIST  { $$ = $1; }
+    |  MAP      { $$ = $1; }
     ;
 
 args
