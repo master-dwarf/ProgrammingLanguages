@@ -160,6 +160,13 @@ function sumList(e){
   return num;
 }
 
+function map(closure, ls){
+  if(ls[1] === '[]')
+    return ls[1];
+  else {
+    return [closure[1],ls[1]];
+  }
+}
 exports.createProgram = createProgram;
 exports.isProgram = isProgram;
 exports.getProgramExp = getProgramExp;
@@ -189,6 +196,7 @@ exports.getCondExpElse = getCondExpElse;
 exports.createList = createList;
 exports.isList = isList;
 exports.sumList = sumList;
+exports.map = map;
 
 window.SLang.absyn = exports;
 }());

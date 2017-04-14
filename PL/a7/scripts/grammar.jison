@@ -26,6 +26,7 @@ LETTER		      [a-zA-Z]
 "["                             { return 'LBRACK'; }
 "]"                             { return 'RBRACK'; }
 "sumlist"                       { return 'SUMLIST'; }
+"map"                           { return 'MAP'; }
 "add1"                                { return 'ADD1'; }
 ","                   		      { return 'COMMA'; }
 "=>"                   		      { return 'THATRETURNS'; }
@@ -129,6 +130,7 @@ prim_op
     |  LT       { $$ = $1; }
     |  GT       { $$ = $1; }
     |  SUMLIST  { $$ = $1; }
+    |  MAP      { $$ = $1; }
     ;
 
 args

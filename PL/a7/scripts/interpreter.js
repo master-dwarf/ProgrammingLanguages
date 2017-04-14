@@ -66,6 +66,9 @@ function applyPrimitive(prim,args) {
     case "sumlist":
   typeCheckPrimitiveOp(prim,args,[E.isList]);
   return E.createNum(A.sumList(args[0]));
+    case "map":
+  typeCheckPrimitiveOp(prim,args,[E.isClo, E.isList]);
+  return A.createList(A.map(E.getCloBody(args[0]),args[1]));
     }
 
 }
