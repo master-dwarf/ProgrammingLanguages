@@ -1,0 +1,76 @@
+INSERT INTO `application` (`application_number`,`date_received`,`completed`,`fee_received_date`) 
+	VALUES (1,"10-28-13","True","FALSE"),
+    (2,"07-05-15","True",""),
+    (3,"09-02-15","False",""),
+    (4,"12-02-14","True","FALSE"),
+    (5,"04-12-14","True","FALSE"),
+    (6,"03-20-14","True",""),
+    (7,"01-29-16","False",""),
+    (8,"12-31-12","True","FALSE"),
+    (9,"10-06-17","True",""),
+    (10,"04-26-15","True",""),
+    (11,"10-25-17","True",""),
+    (12,"04-01-14","False","FALSE"),
+    (13,"02-07-18","True",""),
+    (14,"01-24-14","True",""),
+    (15,"12-25-15","False",""),
+    (16,"03-21-14","False",""),
+    (17,"10-05-13","False",""),
+    (18,"09-16-13","False",""),
+    (19,"10-03-16","True",""),
+    (20,"01-17-14","False","FALSE"),
+    (21,"06-12-16","True","TRUE"),
+    (22,"03-22-17","False","TRUE"),
+    (23,"12-04-12","False",""),
+    (24,"01-13-17","False",""),
+    (25,"12-10-13","False","TRUE"),
+    (26,"06-05-14","True",""),
+    (27,"08-26-14","True",""),
+    (28,"02-09-13","False","TRUE"),
+    (29,"07-16-13","True","FALSE"),
+    (30,"06-25-16","False",""),
+    (31,"10-16-17","False","FALSE"),
+    (32,"02-05-15","False",""),
+    (33,"08-14-13","False",""),
+    (34,"04-26-16","True",""),
+    (35,"03-22-18","True","TRUE"),
+    (36,"01-25-14","False","FALSE"),
+    (37,"02-10-14","False","TRUE"),
+    (38,"04-02-14","True","FALSE"),
+    (39,"07-03-15","False","FALSE"),
+    (40,"07-01-12","False","FALSE"),
+    (41,"10-31-17","False",""),
+    (42,"05-21-16","False","FALSE"),
+    (43,"06-01-16","True",""),
+    (44,"01-03-14","True","TRUE"),
+    (45,"11-19-17","True","TRUE"),
+    (46,"07-07-13","True","FALSE"),
+    (47,"12-15-14","False",""),
+    (48,"06-11-13","False",""),
+    (49,"01-06-13","True",""),
+    (50,"03-27-14","False","");
+INSERT INTO `institutes` (`institute_ID`,`Institue_name`) 
+	VALUES 
+    (1,"Harding"),
+    (2,"Norris"),
+    (3,"Jacobson"),
+    (4,"Horne"),
+    (5,"Blevins"),
+    (6,"Maxwell"),
+    (7,"Lambert"),
+    (8,"Rios"),
+    (9,"Phelps"),
+    (10,"Schneider");
+INSERT INTO `term` (`term_ID`,`term_name`)
+	VALUES
+    (1,"Fall"),
+    (2,"Winter"),
+    (3,"Spring");
+INSERT INTO `major` (`major_ID`,`major_name`)
+	VALUES
+    (1,"Computer Science"),
+    (2,"English");
+INSERT INTO `minor` (`minor_ID`,`minor_name`)
+	VALUES
+    (1,"Spanish"),
+    (2,"Nursing");
