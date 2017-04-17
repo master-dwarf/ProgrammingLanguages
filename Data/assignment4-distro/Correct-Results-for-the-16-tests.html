@@ -1,0 +1,449 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+</head>
+<body>
+<h3><span style="font-family: arial,helvetica,sans-serif;">Note:&nbsp;&nbsp; Assignment 4 does not require you to sort your results.&nbsp;&nbsp; Consequently the order of tuples displayed by your evaluate method may not match what I have below.&nbsp;&nbsp; What matters is that the set of tuples you produce equals, as a set, the tuples you see below.</span></h3>
+<h3><span style="font-family: arial,helvetica,sans-serif;">Test Case 16 has a JoinTable constructed with a conditional that is null.&nbsp;&nbsp; This is intentional -- that should be interpreted as a conditional that is "always true".&nbsp;&nbsp; In other words, the Join for that that case really just computes the product.<br /></span></h3>
+<h2 id="test-case-1">Test Case 1</h2>
+<pre><code>Table1.foo3
+ ----------
+          3
+          4
+          8
+          3
+          8
+          1
+          8
+          9
+          5
+          6
+          7
+          9
+          1
+          2
+          3
+          4
+          8
+          9
+         10</code></pre>
+<h2 id="test-case-2">Test Case 2</h2>
+<pre><code>Table1.foo1    Table1.foo2    Table1.foo3
+ ----------     ----------     ----------
+    Ramirez              4              1</code></pre>
+<h2 id="test-case-3">Test Case 3</h2>
+<pre><code>Table5.foo1    Table5.foo2    Table5.foo3    Table5.foo4
+ ----------     ----------     ----------     ----------
+     Morris              4              9         239.42
+     Morris              2              9         239.42
+     Morris              5              9          239.5</code></pre>
+<h2 id="test-case-4">Test Case 4</h2>
+<pre><code>Table3.foo1    Table3.foo2    Table3.foo3    Table3.foo4
+ ----------     ----------     ----------     ----------
+    Ramirez              4              1         124.23
+      Ayala              4              1           8.64</code></pre>
+<h2 id="test-case-5">Test Case 5</h2>
+<pre><code>Table3.foo1    Table3.foo2    Table3.foo3
+ ----------     ----------     ----------
+      Smith              1              3
+      Jones              1              4
+       West              1              8
+      Young              1              5
+     Mcneil              1              1
+      Boone              1              1
+       Dale              1              6
+   Buchanan              1              6
+     Mccall              1              6
+  Rodriguez              1              2
+       Wall              1             10
+     Cotton              1              4
+     Jacobs              1              1
+       Dale              1              6
+   Buchanan              1              6
+       Dale              1              6
+   Buchanan              1              6
+       Dale              1              6
+   Buchanan              1              6
+       Dale              1              6
+   Buchanan              1              6</code></pre>
+<h2 id="test-case-6">Test Case 6</h2>
+<pre><code>Table5.foo1    Table5.foo2    Table5.foo3    Table5.foo4    Table6.foo1    Table6.foo2    Table6.foo3    Table6.foo4
+ ----------     ----------     ----------     ----------     ----------     ----------     ----------     ----------
+     Morris              4              9         239.42        Morris2              4              9          239.5
+     Morris              4              9         239.42        Morris2              4              9          239.5</code></pre>
+<h2 id="test-case-7">Test Case 7</h2>
+<pre><code>Table1.foo1    Table1.foo2    Table1.foo3    Table1.foo4    Table2.foo5    Table2.foo6    Table2.foo7
+ ----------     ----------     ----------     ----------     ----------     ----------     ----------
+      Eagan              4              4           4.23          Apple              1              4
+      Eagan              4              4           4.23         Bagels              4              3
+      Eagan              4              4           4.23         Banana              1              8
+      Eagan              4              4           4.23      Blueberry              4              5
+      Eagan              4              4           4.23          Bread              4              2
+      Eagan              4              4           4.23       Broccoli              2              1
+      Eagan              4              4           4.23        Carrots              4              1
+      Eagan              4              4           4.23          Chili              3              8
+      Eagan              4              4           4.23          Cumin              4              8
+      Eagan              4              4           4.23          Curry              4              4
+      Eagan              4              4           4.23         Orange              1              3
+      Eagan              4              4           4.23       Pancakes              4              7
+      Eagan              4              4           4.23         Pepper              4              9
+      Eagan              4              4           4.23          Pizza              2              8
+      Eagan              4              4           4.23      Raspberry              4              6
+      Eagan              4              4           4.23           Salt              4             10
+      Eagan              4              4           4.23        Spinach              2              3
+      Eagan              4              4           4.23     Strawberry              3              9
+      Eagan              4              4           4.23        Waffles              5              9</code></pre>
+<h2 id="test-case-8">Test Case 8</h2>
+<pre><code>Table1.foo1    Table1.foo2    Table1.foo3    Table1.foo4    Table2.foo5    Table2.foo6    Table2.foo7
+ ----------     ----------     ----------     ----------     ----------     ----------     ----------
+     Hillis              2              1           16.5          Chili              3              8
+     Hillis              2              1           16.5     Strawberry              3              9
+    Ramirez              4              1         124.23          Chili              3              8
+    Ramirez              4              1         124.23     Strawberry              3              9</code></pre>
+<h2 id="test-case-9">Test Case 9</h2>
+<pre><code>Table1.foo1    Table1.foo2    Table1.foo3    Table1.foo4    Table2.foo5    Table2.foo6    Table2.foo7
+ ----------     ----------     ----------     ----------     ----------     ----------     ----------
+     Hillis              2              1           16.5          Apple              1              4
+     Hillis              2              1           16.5         Bagels              4              3
+     Hillis              2              1           16.5         Banana              1              8
+     Hillis              2              1           16.5      Blueberry              4              5
+     Hillis              2              1           16.5          Bread              4              2
+     Hillis              2              1           16.5       Broccoli              2              1
+     Hillis              2              1           16.5        Carrots              4              1
+     Hillis              2              1           16.5          Chili              3              8
+     Hillis              2              1           16.5          Cumin              4              8
+     Hillis              2              1           16.5          Curry              4              4
+     Hillis              2              1           16.5         Orange              1              3
+     Hillis              2              1           16.5       Pancakes              4              7
+     Hillis              2              1           16.5         Pepper              4              9
+     Hillis              2              1           16.5          Pizza              2              8
+     Hillis              2              1           16.5      Raspberry              4              6
+     Hillis              2              1           16.5           Salt              4             10
+     Hillis              2              1           16.5        Spinach              2              3
+     Hillis              2              1           16.5     Strawberry              3              9
+     Hillis              2              1           16.5        Waffles              5              9
+    Ramirez              4              1         124.23          Apple              1              4
+    Ramirez              4              1         124.23         Bagels              4              3
+    Ramirez              4              1         124.23         Banana              1              8
+    Ramirez              4              1         124.23      Blueberry              4              5
+    Ramirez              4              1         124.23          Bread              4              2
+    Ramirez              4              1         124.23       Broccoli              2              1
+    Ramirez              4              1         124.23        Carrots              4              1
+    Ramirez              4              1         124.23          Chili              3              8
+    Ramirez              4              1         124.23          Cumin              4              8
+    Ramirez              4              1         124.23          Curry              4              4
+    Ramirez              4              1         124.23         Orange              1              3
+    Ramirez              4              1         124.23       Pancakes              4              7
+    Ramirez              4              1         124.23         Pepper              4              9
+    Ramirez              4              1         124.23          Pizza              2              8
+    Ramirez              4              1         124.23      Raspberry              4              6
+    Ramirez              4              1         124.23           Salt              4             10
+    Ramirez              4              1         124.23        Spinach              2              3
+    Ramirez              4              1         124.23     Strawberry              3              9
+    Ramirez              4              1         124.23        Waffles              5              9</code></pre>
+<h2 id="test-case-10">Test Case 10</h2>
+<pre><code>Table3.foo1    Table3.foo2    Table3.foo3
+ ----------     ----------     ----------
+    Ramirez              4              1
+      Ayala              4              1</code></pre>
+<h2 id="test-case-11">Test Case 11</h2>
+<pre><code>Table1.foo1    Table1.foo2    Table1.foo3    Table1.foo4    Table2.foo5    Table2.foo6    Table2.foo7
+ ----------     ----------     ----------     ----------     ----------     ----------     ----------
+    Winkler              4              8           1.23         Bagels              4              3
+    Winkler              4              8           1.23      Blueberry              4              5
+    Winkler              4              8           1.23          Bread              4              2
+    Winkler              4              8           1.23        Carrots              4              1
+    Winkler              4              8           1.23          Cumin              4              8
+    Winkler              4              8           1.23          Curry              4              4
+    Winkler              4              8           1.23       Pancakes              4              7
+    Winkler              4              8           1.23         Pepper              4              9
+    Winkler              4              8           1.23      Raspberry              4              6
+    Winkler              4              8           1.23           Salt              4             10</code></pre>
+<h2 id="test-case-12">Test Case 12</h2>
+<pre><code>Table2.foo5    Table1.foo4
+ ----------     ----------
+      Apple           11.7
+     Bagels           11.7
+     Banana           11.7
+  Blueberry           11.7
+      Bread           11.7
+   Broccoli           11.7
+    Carrots           11.7
+      Chili           11.7
+      Cumin           11.7
+      Curry           11.7
+     Orange           11.7
+   Pancakes           11.7
+     Pepper           11.7
+      Pizza           11.7
+  Raspberry           11.7
+       Salt           11.7
+    Spinach           11.7
+ Strawberry           11.7
+    Waffles           11.7</code></pre>
+<h2 id="test-case-13">Test Case 13</h2>
+<pre><code>Table1.foo1    Table1.foo2    Table1.foo3    Table1.foo4    Table2.foo5    Table2.foo6    Table2.foo7
+ ----------     ----------     ----------     ----------     ----------     ----------     ----------
+    Ramirez              4              1         124.23          Cumin              4              8</code></pre>
+<h2 id="test-case-14">Test Case 14</h2>
+<pre><code>Table1.foo1    Table1.foo2    Table1.foo3    Table1.foo4    Table2.foo5    Table2.foo6    Table2.foo7
+ ----------     ----------     ----------     ----------     ----------     ----------     ----------
+      Seuss              4              5            2.2          Apple              1              4
+      Seuss              4              5            2.2         Bagels              4              3
+      Seuss              4              5            2.2         Banana              1              8
+      Seuss              4              5            2.2      Blueberry              4              5
+      Seuss              4              5            2.2          Bread              4              2
+      Seuss              4              5            2.2       Broccoli              2              1
+      Seuss              4              5            2.2        Carrots              4              1
+      Seuss              4              5            2.2          Chili              3              8
+      Seuss              4              5            2.2          Cumin              4              8
+      Seuss              4              5            2.2          Curry              4              4
+      Seuss              4              5            2.2         Orange              1              3
+      Seuss              4              5            2.2       Pancakes              4              7
+      Seuss              4              5            2.2         Pepper              4              9
+      Seuss              4              5            2.2          Pizza              2              8
+      Seuss              4              5            2.2      Raspberry              4              6
+      Seuss              4              5            2.2           Salt              4             10
+      Seuss              4              5            2.2        Spinach              2              3
+      Seuss              4              5            2.2     Strawberry              3              9
+      Seuss              4              5            2.2        Waffles              5              9
+       Able              4              6         548.23          Apple              1              4
+       Able              4              6         548.23         Bagels              4              3
+       Able              4              6         548.23         Banana              1              8
+       Able              4              6         548.23      Blueberry              4              5
+       Able              4              6         548.23          Bread              4              2
+       Able              4              6         548.23       Broccoli              2              1
+       Able              4              6         548.23        Carrots              4              1
+       Able              4              6         548.23          Chili              3              8
+       Able              4              6         548.23          Cumin              4              8
+       Able              4              6         548.23          Curry              4              4
+       Able              4              6         548.23         Orange              1              3
+       Able              4              6         548.23       Pancakes              4              7
+       Able              4              6         548.23         Pepper              4              9
+       Able              4              6         548.23          Pizza              2              8
+       Able              4              6         548.23      Raspberry              4              6
+       Able              4              6         548.23           Salt              4             10
+       Able              4              6         548.23        Spinach              2              3
+       Able              4              6         548.23     Strawberry              3              9
+       Able              4              6         548.23        Waffles              5              9
+      Baker              4              7        1248.23          Apple              1              4
+      Baker              4              7        1248.23         Bagels              4              3
+      Baker              4              7        1248.23         Banana              1              8
+      Baker              4              7        1248.23      Blueberry              4              5
+      Baker              4              7        1248.23          Bread              4              2
+      Baker              4              7        1248.23       Broccoli              2              1
+      Baker              4              7        1248.23        Carrots              4              1
+      Baker              4              7        1248.23          Chili              3              8
+      Baker              4              7        1248.23          Cumin              4              8
+      Baker              4              7        1248.23          Curry              4              4
+      Baker              4              7        1248.23         Orange              1              3
+      Baker              4              7        1248.23       Pancakes              4              7
+      Baker              4              7        1248.23         Pepper              4              9
+      Baker              4              7        1248.23          Pizza              2              8
+      Baker              4              7        1248.23      Raspberry              4              6
+      Baker              4              7        1248.23           Salt              4             10
+      Baker              4              7        1248.23        Spinach              2              3
+      Baker              4              7        1248.23     Strawberry              3              9
+      Baker              4              7        1248.23        Waffles              5              9
+    Ramirez              4              1         124.23          Apple              1              4
+    Ramirez              4              1         124.23         Bagels              4              3
+    Ramirez              4              1         124.23         Banana              1              8
+    Ramirez              4              1         124.23      Blueberry              4              5
+    Ramirez              4              1         124.23          Bread              4              2
+    Ramirez              4              1         124.23       Broccoli              2              1
+    Ramirez              4              1         124.23        Carrots              4              1
+    Ramirez              4              1         124.23          Chili              3              8
+    Ramirez              4              1         124.23          Cumin              4              8
+    Ramirez              4              1         124.23          Curry              4              4
+    Ramirez              4              1         124.23         Orange              1              3
+    Ramirez              4              1         124.23       Pancakes              4              7
+    Ramirez              4              1         124.23         Pepper              4              9
+    Ramirez              4              1         124.23          Pizza              2              8
+    Ramirez              4              1         124.23      Raspberry              4              6
+    Ramirez              4              1         124.23           Salt              4             10
+    Ramirez              4              1         124.23        Spinach              2              3
+    Ramirez              4              1         124.23     Strawberry              3              9
+    Ramirez              4              1         124.23        Waffles              5              9
+      Atlas              4              2           8.23          Apple              1              4
+      Atlas              4              2           8.23         Bagels              4              3
+      Atlas              4              2           8.23         Banana              1              8
+      Atlas              4              2           8.23      Blueberry              4              5
+      Atlas              4              2           8.23          Bread              4              2
+      Atlas              4              2           8.23       Broccoli              2              1
+      Atlas              4              2           8.23        Carrots              4              1
+      Atlas              4              2           8.23          Chili              3              8
+      Atlas              4              2           8.23          Cumin              4              8
+      Atlas              4              2           8.23          Curry              4              4
+      Atlas              4              2           8.23         Orange              1              3
+      Atlas              4              2           8.23       Pancakes              4              7
+      Atlas              4              2           8.23         Pepper              4              9
+      Atlas              4              2           8.23          Pizza              2              8
+      Atlas              4              2           8.23      Raspberry              4              6
+      Atlas              4              2           8.23           Salt              4             10
+      Atlas              4              2           8.23        Spinach              2              3
+      Atlas              4              2           8.23     Strawberry              3              9
+      Atlas              4              2           8.23        Waffles              5              9
+     Norton              4              3           2.23          Apple              1              4
+     Norton              4              3           2.23         Bagels              4              3
+     Norton              4              3           2.23         Banana              1              8
+     Norton              4              3           2.23      Blueberry              4              5
+     Norton              4              3           2.23          Bread              4              2
+     Norton              4              3           2.23       Broccoli              2              1
+     Norton              4              3           2.23        Carrots              4              1
+     Norton              4              3           2.23          Chili              3              8
+     Norton              4              3           2.23          Cumin              4              8
+     Norton              4              3           2.23          Curry              4              4
+     Norton              4              3           2.23         Orange              1              3
+     Norton              4              3           2.23       Pancakes              4              7
+     Norton              4              3           2.23         Pepper              4              9
+     Norton              4              3           2.23          Pizza              2              8
+     Norton              4              3           2.23      Raspberry              4              6
+     Norton              4              3           2.23           Salt              4             10
+     Norton              4              3           2.23        Spinach              2              3
+     Norton              4              3           2.23     Strawberry              3              9
+     Norton              4              3           2.23        Waffles              5              9
+      Eagan              4              4           4.23          Apple              1              4
+      Eagan              4              4           4.23         Bagels              4              3
+      Eagan              4              4           4.23         Banana              1              8
+      Eagan              4              4           4.23      Blueberry              4              5
+      Eagan              4              4           4.23          Bread              4              2
+      Eagan              4              4           4.23       Broccoli              2              1
+      Eagan              4              4           4.23        Carrots              4              1
+      Eagan              4              4           4.23          Chili              3              8
+      Eagan              4              4           4.23          Cumin              4              8
+      Eagan              4              4           4.23          Curry              4              4
+      Eagan              4              4           4.23         Orange              1              3
+      Eagan              4              4           4.23       Pancakes              4              7
+      Eagan              4              4           4.23         Pepper              4              9
+      Eagan              4              4           4.23          Pizza              2              8
+      Eagan              4              4           4.23      Raspberry              4              6
+      Eagan              4              4           4.23           Salt              4             10
+      Eagan              4              4           4.23        Spinach              2              3
+      Eagan              4              4           4.23     Strawberry              3              9
+      Eagan              4              4           4.23        Waffles              5              9
+    Winkler              4              8           1.23          Apple              1              4
+    Winkler              4              8           1.23         Bagels              4              3
+    Winkler              4              8           1.23         Banana              1              8
+    Winkler              4              8           1.23      Blueberry              4              5
+    Winkler              4              8           1.23          Bread              4              2
+    Winkler              4              8           1.23       Broccoli              2              1
+    Winkler              4              8           1.23        Carrots              4              1
+    Winkler              4              8           1.23          Chili              3              8
+    Winkler              4              8           1.23          Cumin              4              8
+    Winkler              4              8           1.23          Curry              4              4
+    Winkler              4              8           1.23         Orange              1              3
+    Winkler              4              8           1.23       Pancakes              4              7
+    Winkler              4              8           1.23         Pepper              4              9
+    Winkler              4              8           1.23          Pizza              2              8
+    Winkler              4              8           1.23      Raspberry              4              6
+    Winkler              4              8           1.23           Salt              4             10
+    Winkler              4              8           1.23        Spinach              2              3
+    Winkler              4              8           1.23     Strawberry              3              9
+    Winkler              4              8           1.23        Waffles              5              9
+      Nixon              4              9           0.23          Apple              1              4
+      Nixon              4              9           0.23         Bagels              4              3
+      Nixon              4              9           0.23         Banana              1              8
+      Nixon              4              9           0.23      Blueberry              4              5
+      Nixon              4              9           0.23          Bread              4              2
+      Nixon              4              9           0.23       Broccoli              2              1
+      Nixon              4              9           0.23        Carrots              4              1
+      Nixon              4              9           0.23          Chili              3              8
+      Nixon              4              9           0.23          Cumin              4              8
+      Nixon              4              9           0.23          Curry              4              4
+      Nixon              4              9           0.23         Orange              1              3
+      Nixon              4              9           0.23       Pancakes              4              7
+      Nixon              4              9           0.23         Pepper              4              9
+      Nixon              4              9           0.23          Pizza              2              8
+      Nixon              4              9           0.23      Raspberry              4              6
+      Nixon              4              9           0.23           Salt              4             10
+      Nixon              4              9           0.23        Spinach              2              3
+      Nixon              4              9           0.23     Strawberry              3              9
+      Nixon              4              9           0.23        Waffles              5              9
+      James              4             10           6.89          Apple              1              4
+      James              4             10           6.89         Bagels              4              3
+      James              4             10           6.89         Banana              1              8
+      James              4             10           6.89      Blueberry              4              5
+      James              4             10           6.89          Bread              4              2
+      James              4             10           6.89       Broccoli              2              1
+      James              4             10           6.89        Carrots              4              1
+      James              4             10           6.89          Chili              3              8
+      James              4             10           6.89          Cumin              4              8
+      James              4             10           6.89          Curry              4              4
+      James              4             10           6.89         Orange              1              3
+      James              4             10           6.89       Pancakes              4              7
+      James              4             10           6.89         Pepper              4              9
+      James              4             10           6.89          Pizza              2              8
+      James              4             10           6.89      Raspberry              4              6
+      James              4             10           6.89           Salt              4             10
+      James              4             10           6.89        Spinach              2              3
+      James              4             10           6.89     Strawberry              3              9
+      James              4             10           6.89        Waffles              5              9</code></pre>
+<h2 id="test-case-15">Test Case 15</h2>
+<pre><code>Table3.foo1    Table3.foo2    Table3.foo3    Table4.foo5    Table4.foo6    Table4.foo7
+ ----------     ----------     ----------     ----------     ----------     ----------
+    Ramirez              4              1          Curry              4              4
+    Ramirez              4              1      Broccoli               4              4
+      Ayala              4              1          Curry              4              4
+      Ayala              4              1      Broccoli               4              4</code></pre>
+<h2 id="test-case-16">Test Case 16</h2>
+<pre><code>Table2.foo5    Table3.foo2    Table1.foo1    Table3.foo2    Table4.foo7
+ ----------     ----------     ----------     ----------     ----------
+      Apple              3          Atlas              3              4
+      Apple              3          Atlas              3              1
+      Apple              3          Atlas              3              6
+     Bagels              3          Atlas              3              4
+     Bagels              3          Atlas              3              1
+     Bagels              3          Atlas              3              6
+     Banana              3          Atlas              3              4
+     Banana              3          Atlas              3              1
+     Banana              3          Atlas              3              6
+  Blueberry              3          Atlas              3              4
+  Blueberry              3          Atlas              3              1
+  Blueberry              3          Atlas              3              6
+      Bread              3          Atlas              3              4
+      Bread              3          Atlas              3              1
+      Bread              3          Atlas              3              6
+   Broccoli              3          Atlas              3              4
+   Broccoli              3          Atlas              3              1
+   Broccoli              3          Atlas              3              6
+    Carrots              3          Atlas              3              4
+    Carrots              3          Atlas              3              1
+    Carrots              3          Atlas              3              6
+      Chili              3          Atlas              3              4
+      Chili              3          Atlas              3              1
+      Chili              3          Atlas              3              6
+      Cumin              3          Atlas              3              4
+      Cumin              3          Atlas              3              1
+      Cumin              3          Atlas              3              6
+      Curry              3          Atlas              3              4
+      Curry              3          Atlas              3              1
+      Curry              3          Atlas              3              6
+     Orange              3          Atlas              3              4
+     Orange              3          Atlas              3              1
+     Orange              3          Atlas              3              6
+   Pancakes              3          Atlas              3              4
+   Pancakes              3          Atlas              3              1
+   Pancakes              3          Atlas              3              6
+     Pepper              3          Atlas              3              4
+     Pepper              3          Atlas              3              1
+     Pepper              3          Atlas              3              6
+      Pizza              3          Atlas              3              4
+      Pizza              3          Atlas              3              1
+      Pizza              3          Atlas              3              6
+  Raspberry              3          Atlas              3              4
+  Raspberry              3          Atlas              3              1
+  Raspberry              3          Atlas              3              6
+       Salt              3          Atlas              3              4
+       Salt              3          Atlas              3              1
+       Salt              3          Atlas              3              6
+    Spinach              3          Atlas              3              4
+    Spinach              3          Atlas              3              1
+    Spinach              3          Atlas              3              6
+ Strawberry              3          Atlas              3              4
+ Strawberry              3          Atlas              3              1
+ Strawberry              3          Atlas              3              6
+    Waffles              3          Atlas              3              4
+    Waffles              3          Atlas              3              1
+    Waffles              3          Atlas              3              6</code></pre>
+</body>
+</html>
