@@ -49,10 +49,8 @@ public class TestHarness {
 	tests[10] = BuildTest11();
 	tests[11] = BuildTest12();
 	tests[12] = BuildTest13();
-	tests[13] = null;	// Until you get join implemented, don't build this test
-	//	tests[13] = BuildTest14();
-	tests[14] = null;	// Until you get join implemented, don't build this test
-	//	tests[14] = BuildTest15();
+	tests[13] = BuildTest14();
+	tests[14] = BuildTest15();
 	tests[15] = null;	// Until you get join implemented, don't build this test
 	//	tests[15] = BuildTest16();
 

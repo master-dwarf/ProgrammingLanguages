@@ -22,7 +22,7 @@ public class JoinTable extends Table {
      */
     public JoinTable(Table t1, Table t2, Conditional c) {
 
-	super("Joining " + t1.toString() + " " + t2.toString() + " on condiition " + c.toString());
+	super("Joining " + t1.toString() + " " + t2.toString() + " on condiition " + ((c==null)? "" : c.toString()));
 	first_join_tab = t1;
 	second_join_tab = t2;
 
@@ -59,9 +59,12 @@ public class JoinTable extends Table {
       for(Tuple a : tuples1){
         for(Tuple b : tuples2){
           Tuple ret = joinTuple(a,b);
+          String constraint = "";
           if(cond == null)
+            constraint = "";
+          if(constraint == "")
             tuples_to_return.add(ret);
-          if(cond.truthVal(ret))
+          else if(cond.truthVal(ret))
             tuples_to_return.add(ret);
         }
       }
