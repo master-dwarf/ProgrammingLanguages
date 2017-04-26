@@ -30,10 +30,10 @@ public class TestHarness {
     }
 
     public static void main (String args []) throws QueryException {
-		
+
 	Scanner in = new Scanner(System.in);
 	int i;
-	
+
 	Table [] tests;
 	tests = new Table[16];
 	tests[0] = BuildTest1();
@@ -47,17 +47,15 @@ public class TestHarness {
 	tests[8] = BuildTest9();
 	tests[9] = BuildTest10();
 	tests[10] = BuildTest11();
-	tests[11] = null;	// Until you get join implemented, don't build this test
-	//	tests[11] = BuildTest12();
-	tests[12] = null;	// Until you get join implemented, don't build this test
-	//	tests[12] = BuildTest13();
+	tests[11] = BuildTest12();
+	tests[12] = BuildTest13();
 	tests[13] = null;	// Until you get join implemented, don't build this test
 	//	tests[13] = BuildTest14();
 	tests[14] = null;	// Until you get join implemented, don't build this test
 	//	tests[14] = BuildTest15();
 	tests[15] = null;	// Until you get join implemented, don't build this test
 	//	tests[15] = BuildTest16();
-	
+
 	menu();
 	i = in.nextInt();
 	while (i > 0) {
@@ -178,7 +176,7 @@ public class TestHarness {
 
 	return t;
     }
-    
+
     // 10 -- Dups, selection, and projection
     static Table BuildTest10 ()  throws QueryException {
 	t1 = new TableInDB("Table3");
@@ -209,9 +207,8 @@ public class TestHarness {
 	TableInDB tb1 = new TableInDB("Table1");
 	TableInDB tb2 = new TableInDB("Table2");
 	Conditional c = new EQConditional(new CondLeaf(tb1, "Table1.foo1"), new CondLeaf(new StringValue("West")));
-
 	JoinTable jt = new JoinTable(tb1, tb2, c);
-	ProjectionTable pt = new ProjectionTable (jt, 
+	ProjectionTable pt = new ProjectionTable (jt,
 						  new String[] {"Table2.foo5", "Table1.foo4"});
 	return pt;
     }
@@ -296,10 +293,10 @@ public class TestHarness {
 
 	JoinTable jt2 = new JoinTable(tb3, tb4, a);
 
-    
+
 	JoinTable jt3 = new JoinTable(jt1, jt2, null);
 
-	ProjectionTable pt = new ProjectionTable (jt3, 
+	ProjectionTable pt = new ProjectionTable (jt3,
 						  new String[] {"Table2.foo5", "Table3.foo2", "Table1.foo1", "Table3.foo2", "Table4.foo7"});
 
 	Conditional c3 = (Conditional) new EQConditional(new CondLeaf(tb1, "Table1.foo1"), new CondLeaf( new StringValue("Atlas") ) );

@@ -10,7 +10,7 @@ public class JoinTable extends Table {
 
     Table first_join_tab;
     Table second_join_tab;
-    String[] attr_names_table_one, attr_names_table_two, attr_types_table_one, attr_types_table_two, attr_names, attr_types;
+    String[] attr_names_table_one, attr_names_table_two, attr_types_table_one, attr_types_table_two;
     Conditional cond;
 
     /**
@@ -26,13 +26,15 @@ public class JoinTable extends Table {
 	first_join_tab = t1;
 	second_join_tab = t2;
 
-  cond = c;
+    attr_names = joinNames(t1,t2);
+    attr_types = joinTypes(t1,t2);
+    cond = c;
 
-  attr_names_table_one = t1.attrib_names();
-  attr_types_table_one = t1.attrib_types();
+    attr_names_table_one = t1.attrib_names();
+    attr_names_table_two = t2.attrib_names();
 
-  attr_names_table_two = t2.attrib_names();
-  attr_types_table_two = t2.attrib_types();
+    attr_types_table_one = t1.attrib_types();
+    attr_types_table_two = t2.attrib_types();
 
     }
 
@@ -59,10 +61,11 @@ public class JoinTable extends Table {
           Tuple ret = joinTuple(a,b);
           if(cond == null)
             tuples_to_return.add(ret);
-          else if(cond.truthVal(ret))
+          if(cond.truthVal(ret))
             tuples_to_return.add(ret);
         }
       }
+
 
 	// It should be done with an efficient algorithm based on
 	// sorting or hashing
@@ -84,25 +87,39 @@ public class JoinTable extends Table {
       }
       String[] newValues = values.toArray(new String[values.size()]);
 
-      attr_names = new String[values.size()];
-      for(int i=0;i<attr_names.length;i++){
-        if(i < attr_names_table_one.length)
-          attr_names[i] = attr_names_table_one[i];
-        else
-          attr_names[i] = attr_names_table_two[i - attr_names_table_one.length];
-      }
+      Tuple ret = new Tuple(attr_names,attr_types,newValues);
+      return ret;
+    }
+    public String[] joinNames(Table a, Table b){
+      attr_names = new String[a.attrib_names().length + b.attrib_names().length];
 
-      attr_types = new String[values.size()];
+      attr_names_table_one = a.attrib_names();
+      attr_names_table_two = b.attrib_names();
+
+      for(int i=0;i<attr_names.length;i++){
+        if(i < attr_names_table_one.length){
+          attr_names[i] = attr_names_table_one[i];
+        }
+        else{
+          attr_names[i] = attr_names_table_two[i - attr_names_table_one.length];
+        }
+      }
+      return attr_names;
+    }
+
+    public String[] joinTypes(Table a, Table b){
+      attr_types = new String[a.attrib_types().length + b.attrib_types().length];
+
+      attr_types_table_one = a.attrib_types();
+      attr_types_table_two = b.attrib_types();
+
       for(int i=0;i<attr_types.length;i++){
         if(i < attr_types_table_one.length)
           attr_types[i] = attr_types_table_one[i];
         else
           attr_types[i] = attr_types_table_two[i - attr_types_table_one.length];
       }
-
-      Tuple ret = new Tuple(attr_names,attr_types,newValues);
-      return ret;
+      return attr_types;
     }
-
 
 }
