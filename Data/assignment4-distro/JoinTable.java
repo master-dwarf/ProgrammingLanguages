@@ -82,22 +82,23 @@ public class JoinTable extends Table {
         // System.out.println(b.get_val(cv).toString());
         values.add(b.get_val(cv).toString());
       }
+      String[] newValues = values.toArray(new String[values.size()]);
+
       attr_names = new String[values.size()];
-      for(int i=0;i<attr_names_table_one.length;i++){
-        attr_names[i] = attr_names_table_one[i];
-      }
-      for(int i=attr_names_table_one.length; i<attr_names.length;i++){
-        attr_names[i] = attr_names_table_two[i - attr_names_table_one.length];
+      for(int i=0;i<attr_names.length;i++){
+        if(i < attr_names_table_one.length)
+          attr_names[i] = attr_names_table_one[i];
+        else
+          attr_names[i] = attr_names_table_two[i - attr_names_table_one.length];
       }
 
       attr_types = new String[values.size()];
-      for(int i=0;i<attr_types_table_one.length;i++){
-        attr_types[i] = attr_types_table_one[i];
+      for(int i=0;i<attr_types.length;i++){
+        if(i < attr_types_table_one.length)
+          attr_types[i] = attr_types_table_one[i];
+        else
+          attr_types[i] = attr_types_table_two[i - attr_types_table_one.length];
       }
-      for(int i=attr_types_table_one.length; i<attr_names.length;i++){
-        attr_types[i] = attr_types_table_two[i - attr_types_table_one.length];
-      }
-      String[] newValues = values.toArray(new String[values.size()]);
 
       Tuple ret = new Tuple(attr_names,attr_types,newValues);
       return ret;
