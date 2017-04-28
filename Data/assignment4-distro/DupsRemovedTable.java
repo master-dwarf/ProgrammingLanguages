@@ -1,50 +1,53 @@
 import java.util.*;
 
 /**
- * DupsRemovedTable - this class implements the duplicate removal operation of a
- * relational DB
- */
+* DupsRemovedTable - this class implements the duplicate removal operation of a
+* relational DB
+*/
 
 public class DupsRemovedTable extends Table {
 
-    Table tab_dups_removed_from;
+  Table tab_dups_removed_from;
 
-    /**
-     * @param t - the table from which duplicates are to be removed
-     *
-     */
-    public DupsRemovedTable(Table t) {
+  /**
+  * @param t - the table from which duplicates are to be removed
+  *
+  */
+  public DupsRemovedTable(Table t) {
 
-	super("Removing duplicates from " + t.toString());
-	tab_dups_removed_from = t;
+    super("Removing duplicates from " + t.toString());
+    tab_dups_removed_from = t;
 
-  attr_names = t.attrib_names();
-  attr_types = t.attrib_types();
+    attr_names = t.attrib_names();
+    attr_types = t.attrib_types();
 
+  }
+
+  public Table [] my_children () {
+    return new Table [] { tab_dups_removed_from };
+  }
+
+  public Table optimize() {
+    if(tab_dups_removed_from instanceof JoinTable){
+      JoinTable j = (JoinTable) tab_dups_removed_from;
+      return new JoinTable ( new DupsRemovedTable(j.first_join_tab), new DupsRemovedTable(j.second_join_tab),j.cond).optimize();
     }
-
-    public Table [] my_children () {
-	return new Table [] { tab_dups_removed_from };
+    else if(tab_dups_removed_from instanceof SelectTable){
+      return this;
     }
-
-    public Table optimize() {
-	// Right now no optimization is done -- you'll need to improve this
-	return this;
+    else{
+      tab_dups_removed_from = tab_dups_removed_from.optimize();
+      return this;
     }
+  }
 
-    public ArrayList<Tuple> evaluate() {
-	ArrayList<Tuple> tuples_to_return = new ArrayList<Tuple>();
+  public ArrayList<Tuple> evaluate() {
+    ArrayList<Tuple> tuples_to_return = new ArrayList<Tuple>();
 
-	// Here you need to add the correct tuples to tuples_to_return
-	// for this operation
+    ArrayList<Tuple> tuples1 = tab_dups_removed_from.evaluate();
+    ListIterator iterate_tuples = tuples1.listIterator(0);
 
-  //  if(!tuples_to_return.contains(Tuple))
-  //    add to tuples_to_return
-
-  ArrayList<Tuple> tuples1 = tab_dups_removed_from.evaluate();
-  ListIterator iterate_tuples = tuples1.listIterator(0);
-
-  while (iterate_tuples.hasNext()) {
+    while (iterate_tuples.hasNext()) {
       Tuple tupleToProject = (Tuple) iterate_tuples.next();
       String[] projectedValues = new String[attr_names.length];
       int[] hashValues = new int[attr_names.length];
@@ -73,12 +76,9 @@ public class DupsRemovedTable extends Table {
       }
     }
 
-	// It should be done with an efficient algorithm based on
-	// sorting or hashing
+    profile_intermediate_tables(tuples_to_return);
+    return tuples_to_return;
 
-	profile_intermediate_tables(tuples_to_return);
-	return tuples_to_return;
-
-    }
+  }
 
 }

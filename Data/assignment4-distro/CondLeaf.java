@@ -20,7 +20,7 @@ public class CondLeaf {
 	this.attrib_name = attrib_name;
 	is_constant = false;
     }
-	
+
     /**
      * The constructor to use for an operand that is a constant ColumnValue
      * @param col_val - the constant value of the operand.  Must be a FloatValue, IntValue, or StringValue
@@ -60,7 +60,7 @@ public class CondLeaf {
     public Table which_table () {
 	return my_table;
     }
-	
+
     /**
      * Only to be called for operands that are not constants
      * @return the attribute associated with the operand
@@ -69,7 +69,7 @@ public class CondLeaf {
     public String which_attrib () {
 	return attrib_name;
     }
-	
+
     public ColumnValue evaluate() {
 	if (is_constant)
 	    return col_val;
@@ -96,6 +96,6 @@ public class CondLeaf {
 	    return col_val.toString();
 	else
 	    return attrib_name;
-		
+
     }
 }

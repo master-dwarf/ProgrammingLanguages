@@ -28,11 +28,11 @@ public class ProjectionTable extends Table {
     }
 
     public Table optimize() {
-	
+
 	// One of the projection optimizations is done to illustrate the technique
 	if (tab_projecting_on instanceof ProjectionTable) {
 	    return new ProjectionTable ( ((ProjectionTable) tab_projecting_on).tab_projecting_on.optimize(),
-					 attr_names); 
+					 attr_names);
 	}
 	else {
 	    tab_projecting_on = tab_projecting_on.optimize();
@@ -68,7 +68,7 @@ public class ProjectionTable extends Table {
     	String[] attributeTypes = new String[attributesToProject.length];
     	String[] attr_names = tab_projecting_on.attrib_names();
     	String[] attr_types = tab_projecting_on.attrib_types();
-    	
+
     	for (int i=0; i < attributesToProject.length; i++) {
     		String projectedAttribute = attributesToProject[i];
     		String projectedAttributeType = null;
@@ -78,10 +78,10 @@ public class ProjectionTable extends Table {
     				break;
     			}
     		}
-    		
+
     		attributeTypes[i] = projectedAttributeType;
     	}
-    	
+
     	return attributeTypes;
     }
 
