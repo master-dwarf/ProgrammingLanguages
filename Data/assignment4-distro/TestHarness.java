@@ -51,8 +51,7 @@ public class TestHarness {
 	tests[12] = BuildTest13();
 	tests[13] = BuildTest14();
 	tests[14] = BuildTest15();
-	tests[15] = null;	// Until you get join implemented, don't build this test
-	//	tests[15] = BuildTest16();
+	tests[15] = BuildTest16();
 
 	menu();
 	i = in.nextInt();
