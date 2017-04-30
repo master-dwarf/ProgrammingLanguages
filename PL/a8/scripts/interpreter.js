@@ -83,15 +83,24 @@
     }
   }
   function callByDynamic(exp,envir) {
-
-    // to be completed
-
+    var f = evalExp(A.getAppExpFn(exp),envir);
+    var args = evalExps(A.getAppExpArgs(exp),envir);
+    if (E.isClo(f)) {
+      if (E.getCloParams(f).length !== args.length) {
+        throw new Error("Runtime error: wrong number of arguments in " +
+        "a function call (" + E.getCloParams(f).length +
+        " expected but " + args.length + " given)");
+      } else {
+        var values = evalExps(E.getCloBody(f),E.update(E.getEnvEnv(E.getCloEnv(f)),E.getCloParams(f),args));
+        return values[values.length-1];
+      }
+    } else {
+      throw f + " is not a closure and thus cannot be applied.";
+    }
   }
 
   function callByReference(exp,envir) {
-
-    // to be completed
-
+    
   }
   function callByCopyRestore(exp,envir) {
 

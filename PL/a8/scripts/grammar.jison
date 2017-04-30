@@ -22,6 +22,8 @@ LETTER		      [a-zA-Z]
 "==="                  		      { return 'EQ'; }
 "~"                   		      { return 'NEG'; }
 "not"                  		      { return 'NOT'; }
+"meq"                           { return 'MEQ'; }
+"teq"                           { return 'TEQ'; }
 "add1"                                { return 'ADD1'; }
 "let"                                 { return 'LET'; }
 "letrec"                              { return "LETREC";}
@@ -71,6 +73,18 @@ exp
     | print2_exp    { $$ = $1; }
     | assign_exp    { $$ = $1; }
     | while_exp     { $$ = $1; }
+    | magic_exp     { $$ = $1; }
+    ;
+
+magic_exp
+    : VAR TEQ exp
+        { var op = SLang.absyn.createPrim2AppExp('*', SLang.absyn.createVarExp($1), $3);
+          $$ = SLang.absyn.createAssignExp($1,op);
+        }
+    | VAR MEQ exp
+        { var op = SLang.absyn.createPrim2AppExp('-', SLang.absyn.createVarExp($1), $3);
+          $$ = SLang.absyn.createAssignExp($1,op);
+         }
     ;
 
 var_exp
