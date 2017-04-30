@@ -24,6 +24,7 @@ LETTER		      [a-zA-Z]
 "not"                  		      { return 'NOT'; }
 "add1"                                { return 'ADD1'; }
 "let"                                 { return 'LET'; }
+"letrec"                              { return "LETREC";}
 "in"                                  { return 'IN'; }
 "end"                                 { return 'END'; }
 "print"                               { return 'PRINT'; }
@@ -60,11 +61,12 @@ exp
     : var_exp       { $$ = $1; }
     | intlit_exp    { $$ = $1; }
     | fn_exp        { $$ = $1; }
-    | app_exp       { $$ = $1; }    
+    | app_exp       { $$ = $1; }
     | prim1_app_exp { $$ = $1; }
     | prim2_app_exp { $$ = $1; }
     | if_exp        { $$ = $1; }
     | let_exp       { $$ = $1; }
+    | letrec_exp    { $$ = $1; }
     | print_exp     { $$ = $1; }
     | print2_exp    { $$ = $1; }
     | assign_exp    { $$ = $1; }
@@ -85,7 +87,7 @@ print_exp
     ;
 
 print2_exp
-    : PRINT DQUOTE VAR DQUOTE optional 
+    : PRINT DQUOTE VAR DQUOTE optional
            { $$ = SLang.absyn.createPrint2Exp( $3, $5 ); }
     ;
 
@@ -93,7 +95,7 @@ optional
     : COLON        { $$ = null; }
     | exp          { $$ = $1; }
     ;
- 
+
 assign_exp
     : SET VAR EQ exp  { $$ = SLang.absyn.createAssignExp( $2, $4 ); }
     ;
@@ -111,16 +113,23 @@ let_exp
 	     appExp.comesFromLetBlock = true;
              $$ = appExp;
            }
-    ; 
+    | LETREC bindings IN block END
+    { var args = $2[1]; args.unshift( "args" );
+      var fnexp = SLang.absyn.createFnExp($2[0],$4);
+      var letrec_exp = SLang.absyn.createLetrecExp(fnexp,args);
+      letrec_exp.comesFromLetBlock = true;
+      $$ = letrec_exp;
+    }
+    ;
 
 bindings
-    : VAR EQ exp              
-           { $$ = [ [ $1 ], [ $3 ] ]; }  
+    : VAR EQ exp
+           { $$ = [ [ $1 ], [ $3 ] ]; }
     | VAR EQ exp bindings
            { var vars = $4[0];  vars.unshift($1);
              var vals = $4[1];  vals.unshift($3);
 	     $$ = [ vars, vals ];
-           }  
+           }
     ;
 
 fn_exp
@@ -130,7 +139,7 @@ fn_exp
 
 formals
     : /* empty */ { $$ = [ ]; }
-    | VAR moreformals 
+    | VAR moreformals
         { var result;
           if ($2 === [ ])
 	     result = [ $1 ];
@@ -144,8 +153,8 @@ formals
 
 moreformals
     : /* empty */ { $$ = [ ] }
-    | COMMA VAR moreformals 
-       { $3.unshift($2); 
+    | COMMA VAR moreformals
+       { $3.unshift($2);
          $$ = $3; }
     ;
 
@@ -215,4 +224,3 @@ while_exp
     ;
 
 %%
-
