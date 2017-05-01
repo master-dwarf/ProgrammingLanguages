@@ -2,323 +2,349 @@
 
 (function (){
 
-"use strict";
+  "use strict";
 
-var exports = {};
+  var exports = {};
 
-function createProgram(e) {
-    return ["Program", e]; 
-}
-function isProgram(e) { 
-    return e[0] === "Program"; 
-}
-function getProgramExp(e) { 
+  function createProgram(e) {
+    return ["Program", e];
+  }
+  function isProgram(e) {
+    return e[0] === "Program";
+  }
+  function getProgramExp(e) {
     if (isProgram(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getProgramExp is not a program.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getProgramExp is not a program.");
     }
-}				       
-function createVarExp(v) { 
-    return ["VarExp", v]; 
-}
-function isVarExp(e) { 
-    return e[0] === "VarExp"; 
-}
-function getVarExpId(e) { 
+  }
+  function createVarExp(v) {
+    return ["VarExp", v];
+  }
+  function isVarExp(e) {
+    return e[0] === "VarExp";
+  }
+  function getVarExpId(e) {
     if (isVarExp(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getVarExpId is not a VarExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getVarExpId is not a VarExp.");
     }
-}
-function createIntExp(n) {
+  }
+  function createIntExp(n) {
     return ["IntExp", parseInt(n)];
-}
-function isIntExp(e) { 
-    return e[0] === "IntExp"; 
-}
-function getIntExpValue(e) { 
+  }
+  function isIntExp(e) {
+    return e[0] === "IntExp";
+  }
+  function getIntExpValue(e) {
     if (isIntExp(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getIntExpValue is not an IntExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getIntExpValue is not an IntExp.");
     }
-}
-function createFnExp(params,body) {
+  }
+  function createFnExp(params,body) {
     return ["FnExp",params,body];
-}
-function isFnExp(e) { 
-    return e[0] === "FnExp"; 
-}
-function getFnExpParams(e) { 
+  }
+  function isFnExp(e) {
+    return e[0] === "FnExp";
+  }
+  function getFnExpParams(e) {
     if (isFnExp(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getFnExpParams is not an FnExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getFnExpParams is not an FnExp.");
     }
-}
-function getFnExpBody(e) { 
+  }
+  function getFnExpBody(e) {
     if (isFnExp(e)) {
-	return e[2];
+      return e[2];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getFnExpBody is not an FnExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getFnExpBody is not an FnExp.");
     }
-}
-function createAppExp(fn,args) {
+  }
+  function createAppExp(fn,args) {
     return ["AppExp",fn,args];
-}
-function isAppExp(e) { 
-    return e[0] === "AppExp"; 
-}
-function getAppExpFn(e) { 
+  }
+  function isAppExp(e) {
+    return e[0] === "AppExp";
+  }
+  function getAppExpFn(e) {
     if (isAppExp(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getAppExpFn is not an AppExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getAppExpFn is not an AppExp.");
     }
-}
-function getAppExpArgs(e) { 
+  }
+  function getAppExpArgs(e) {
     if (isAppExp(e)) {
-	return e[2].slice(1); // eliminate the first element (i.e., "args")
+      return e[2].slice(1); // eliminate the first element (i.e., "args")
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getAppExpArgs is not an AppExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getAppExpArgs is not an AppExp.");
     }
-}
-function createPrim1AppExp(prim,arg) {
+  }
+  function createPrim1AppExp(prim,arg) {
     return ["PrimApp1Exp",prim,arg];
-}
-function isPrim1AppExp(e) { 
-    return e[0] === "PrimApp1Exp"; 
-}
-function getPrim1AppExpPrim(e) { 
+  }
+  function isPrim1AppExp(e) {
+    return e[0] === "PrimApp1Exp";
+  }
+  function getPrim1AppExpPrim(e) {
     if (isPrim1AppExp(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getPrim1AppExpPrim is not a Prim1AppExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getPrim1AppExpPrim is not a Prim1AppExp.");
     }
-}
-function getPrim1AppExpArg(e) { 
+  }
+  function getPrim1AppExpArg(e) {
     if (isPrim1AppExp(e)) {
-	return e[2];
+      return e[2];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getPrim1AppExpArg is not a Prim1AppExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getPrim1AppExpArg is not a Prim1AppExp.");
     }
-}
-function createPrim2AppExp(prim,arg1,arg2) {
+  }
+  function createPrim2AppExp(prim,arg1,arg2) {
     return ["Prim2AppExp",prim,arg1,arg2];
-}
-function isPrim2AppExp(e) { 
-    return e[0] === "Prim2AppExp"; 
-}
-function getPrim2AppExpPrim(e) { 
+  }
+  function isPrim2AppExp(e) {
+    return e[0] === "Prim2AppExp";
+  }
+  function getPrim2AppExpPrim(e) {
     if (isPrim2AppExp(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getPrim2AppExpPrim is not a Prim2AppExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getPrim2AppExpPrim is not a Prim2AppExp.");
     }
-}
-function getPrim2AppExpArg1(e) { 
+  }
+  function getPrim2AppExpArg1(e) {
     if (isPrim2AppExp(e)) {
-	return e[2];
+      return e[2];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getPrim2AppExpArg is not a Prim2AppExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getPrim2AppExpArg is not a Prim2AppExp.");
     }
-}
-function getPrim2AppExpArg2(e) { 
+  }
+  function getPrim2AppExpArg2(e) {
     if (isPrim2AppExp(e)) {
-	return e[3];
+      return e[3];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getPrim2AppExpArg is not a Prim2AppExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getPrim2AppExpArg is not a Prim2AppExp.");
     }
-}
-function createPrintExp(e) {
+  }
+  function createPrintExp(e) {
     return ["PrintExp", e];
-}
-function isPrintExp(e) { 
-    return e[0] === "PrintExp"; 
-}
-function getPrintExpExp(e) { 
+  }
+  function isPrintExp(e) {
+    return e[0] === "PrintExp";
+  }
+  function getPrintExpExp(e) {
     if (isPrintExp(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getPrintExpExp is not a PrintExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getPrintExpExp is not a PrintExp.");
     }
-}
-function createPrint2Exp(s,e) {
+  }
+  function createPrint2Exp(s,e) {
     return ["Print2Exp", s, e];
-}
-function isPrint2Exp(e) { 
-    return e[0] === "Print2Exp"; 
-}
-function getPrint2ExpString(e) { 
+  }
+  function isPrint2Exp(e) {
+    return e[0] === "Print2Exp";
+  }
+  function getPrint2ExpString(e) {
     if (isPrint2Exp(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getPrint2ExpString is not a Print2Exp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getPrint2ExpString is not a Print2Exp.");
     }
-}
-function getPrint2ExpExp(e) { 
+  }
+  function getPrint2ExpExp(e) {
     if (isPrint2Exp(e)) {
-	return e[2];
+      return e[2];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getPrint2ExpExp is not a Print2Exp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getPrint2ExpExp is not a Print2Exp.");
     }
-}
+  }
 
-function createAssignExp(v,e) {
+  function createAssignExp(v,e) {
     return ["AssignExp", v, e];
-}
-function isAssignExp(e) { 
-    return e[0] === "AssignExp"; 
-}
-function getAssignExpVar(e) { 
+  }
+  function isAssignExp(e) {
+    return e[0] === "AssignExp";
+  }
+  function getAssignExpVar(e) {
     if (isAssignExp(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getAssignExpVar is not an AssignExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getAssignExpVar is not an AssignExp.");
     }
-}
-function getAssignExpRHS(e) { 
+  }
+  function getAssignExpRHS(e) {
     if (isAssignExp(e)) {
-	return e[2];
+      return e[2];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getAssignExpRHS is not an AssignExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getAssignExpRHS is not an AssignExp.");
     }
-}
-function createBlock(list) {
+  }
+  function createBlock(list) {
     return ["Block",list];
-}
-function isBlock(b) { 
-    return b[0] === "Block"; 
-}
-function getBlockList(b) { 
+  }
+  function isBlock(b) {
+    return b[0] === "Block";
+  }
+  function getBlockList(b) {
     if (isBlock(b)) {
-	return b[1];
+      return b[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getBlockList is not a Block.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getBlockList is not a Block.");
     }
-}
-function createIfExp(condExp,thenExp,elseExp) {
+  }
+  function createIfExp(condExp,thenExp,elseExp) {
     return ["IfExp",condExp,thenExp,elseExp];
-}
-function isIfExp(e) { 
-    return e[0] === "IfExp"; 
-}
-function getIfExpCond(e) { 
+  }
+  function isIfExp(e) {
+    return e[0] === "IfExp";
+  }
+  function getIfExpCond(e) {
     if (isIfExp(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getIfExpCond is not an IfExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getIfExpCond is not an IfExp.");
     }
-}
-function getIfExpThen(e) { 
+  }
+  function getIfExpThen(e) {
     if (isIfExp(e)) {
-	return e[2];
+      return e[2];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getIfExpThen is not an IfExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getIfExpThen is not an IfExp.");
     }
-}
-function getIfExpElse(e) { 
+  }
+  function getIfExpElse(e) {
     if (isIfExp(e)) {
-	return e[3];
+      return e[3];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getIfExpElse is not an IfExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getIfExpElse is not an IfExp.");
     }
-}
-function createWhileExp(cond,body) {
+  }
+  function createWhileExp(cond,body) {
     return ["WhileExp",cond,body];
-}
-function isWhileExp(e) { 
-    return e[0] === "WhileExp"; 
-}
-function getWhileExpCond(e) { 
+  }
+  function isWhileExp(e) {
+    return e[0] === "WhileExp";
+  }
+  function getWhileExpCond(e) {
     if (isWhileExp(e)) {
-	return e[1];
+      return e[1];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getWhileExpCond is not a WhileExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getWhileExpCond is not a WhileExp.");
     }
-}
-function getWhileExpBody(e) { 
+  }
+  function getWhileExpBody(e) {
     if (isWhileExp(e)) {
-	return e[2];
+      return e[2];
     } else {
-	throw new Error("Interpreter error: "  +
-			"The argument of getWhileExpBody is not a WhileExp.");
+      throw new Error("Interpreter error: "  +
+      "The argument of getWhileExpBody is not a WhileExp.");
     }
-}
+  }
+  function createLetrecExp(fn,args) {
+    return ["LetrecExp",createAppExp(fn,args),args];
+  }
+  function isLetrecExp(e) {
+    return e[0] === "LetrecExp";
+  }
+  function getLetrecExp(e) {
+    if (isLetrecExp(e)) {
+      return e[1];
+    } else {
+      throw new Error("Interpreter error: "  +
+      "The argument of getLetrecExpFn is not an LetrecExp.");
+    }
+  }
+  function getLetrecExpArgs(e) {
+    if (isLetrecExp(e)) {
+      return e[2].slice(1); // eliminate the first element (i.e., "args")
+    } else {
+      throw new Error("Interpreter error: "  +
+      "The argument of getLetrecExpArgs is not an LetrecExp.");
+    }
+  }
 
-exports.createProgram = createProgram;
-exports.isProgram = isProgram;
-exports.getProgramExp = getProgramExp;
-exports.createVarExp = createVarExp;
-exports.isVarExp = isVarExp;
-exports.getVarExpId = getVarExpId;
-exports.createIntExp = createIntExp;
-exports.isIntExp = isIntExp;
-exports.getIntExpValue = getIntExpValue;
-exports.createFnExp = createFnExp;
-exports.isFnExp = isFnExp;
-exports.getFnExpParams = getFnExpParams;
-exports.getFnExpBody = getFnExpBody;
-exports.createAppExp = createAppExp;
-exports.isAppExp = isAppExp;
-exports.getAppExpFn = getAppExpFn;
-exports.getAppExpArgs = getAppExpArgs;
-exports.createPrintExp = createPrintExp;
-exports.isPrintExp = isPrintExp;
-exports.getPrintExpExp = getPrintExpExp;
-exports.createPrint2Exp = createPrint2Exp;
-exports.isPrint2Exp = isPrint2Exp;
-exports.getPrint2ExpExp = getPrint2ExpExp;
-exports.getPrint2ExpString = getPrint2ExpString;
-exports.createAssignExp = createAssignExp;
-exports.isAssignExp = isAssignExp;
-exports.getAssignExpVar = getAssignExpVar;
-exports.getAssignExpRHS = getAssignExpRHS;
-exports.createBlock = createBlock;
-exports.isBlock = isBlock;
-exports.getBlockList = getBlockList;
-exports.createPrim1AppExp = createPrim1AppExp;
-exports.createPrim2AppExp = createPrim2AppExp;
-exports.isPrim1AppExp = isPrim1AppExp;
-exports.isPrim2AppExp = isPrim2AppExp;
-exports.getPrim1AppExpPrim = getPrim1AppExpPrim;
-exports.getPrim2AppExpPrim = getPrim2AppExpPrim;
-exports.getPrim1AppExpArg = getPrim1AppExpArg;
-exports.getPrim2AppExpArg1 = getPrim2AppExpArg1;
-exports.getPrim2AppExpArg2 = getPrim2AppExpArg2;
-exports.createIfExp = createIfExp;
-exports.isIfExp = isIfExp;
-exports.getIfExpCond = getIfExpCond;
-exports.getIfExpThen = getIfExpThen;
-exports.getIfExpElse = getIfExpElse;
-exports.createWhileExp = createWhileExp;
-exports.isWhileExp = isWhileExp;
-exports.getWhileExpCond = getWhileExpCond;
-exports.getWhileExpBody = getWhileExpBody;
+  exports.createProgram = createProgram;
+  exports.isProgram = isProgram;
+  exports.getProgramExp = getProgramExp;
+  exports.createVarExp = createVarExp;
+  exports.isVarExp = isVarExp;
+  exports.getVarExpId = getVarExpId;
+  exports.createIntExp = createIntExp;
+  exports.isIntExp = isIntExp;
+  exports.getIntExpValue = getIntExpValue;
+  exports.createFnExp = createFnExp;
+  exports.isFnExp = isFnExp;
+  exports.getFnExpParams = getFnExpParams;
+  exports.getFnExpBody = getFnExpBody;
+  exports.createAppExp = createAppExp;
+  exports.isAppExp = isAppExp;
+  exports.getAppExpFn = getAppExpFn;
+  exports.getAppExpArgs = getAppExpArgs;
+  exports.createPrintExp = createPrintExp;
+  exports.isPrintExp = isPrintExp;
+  exports.getPrintExpExp = getPrintExpExp;
+  exports.createPrint2Exp = createPrint2Exp;
+  exports.isPrint2Exp = isPrint2Exp;
+  exports.getPrint2ExpExp = getPrint2ExpExp;
+  exports.getPrint2ExpString = getPrint2ExpString;
+  exports.createAssignExp = createAssignExp;
+  exports.isAssignExp = isAssignExp;
+  exports.getAssignExpVar = getAssignExpVar;
+  exports.getAssignExpRHS = getAssignExpRHS;
+  exports.createBlock = createBlock;
+  exports.isBlock = isBlock;
+  exports.getBlockList = getBlockList;
+  exports.createPrim1AppExp = createPrim1AppExp;
+  exports.createPrim2AppExp = createPrim2AppExp;
+  exports.isPrim1AppExp = isPrim1AppExp;
+  exports.isPrim2AppExp = isPrim2AppExp;
+  exports.getPrim1AppExpPrim = getPrim1AppExpPrim;
+  exports.getPrim2AppExpPrim = getPrim2AppExpPrim;
+  exports.getPrim1AppExpArg = getPrim1AppExpArg;
+  exports.getPrim2AppExpArg1 = getPrim2AppExpArg1;
+  exports.getPrim2AppExpArg2 = getPrim2AppExpArg2;
+  exports.createIfExp = createIfExp;
+  exports.isIfExp = isIfExp;
+  exports.getIfExpCond = getIfExpCond;
+  exports.getIfExpThen = getIfExpThen;
+  exports.getIfExpElse = getIfExpElse;
+  exports.createWhileExp = createWhileExp;
+  exports.isWhileExp = isWhileExp;
+  exports.getWhileExpCond = getWhileExpCond;
+  exports.getWhileExpBody = getWhileExpBody;
+  exports.createLetrecExp = createLetrecExp;
+  exports.isLetrecExp = isLetrecExp;
+  exports.getLetrecExp = getLetrecExp;
+  exports.getLetrecExpArgs = getLetrecExpArgs;
 
-SLang.absyn = exports;
+  SLang.absyn = exports;
 }());
