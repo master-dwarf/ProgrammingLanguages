@@ -101,12 +101,12 @@
 
   function callByReference(exp,envir) {
     var f = evalExp(A.getAppExpFn(exp),envir);
-    var args = A.getAppExpArgs(exp).map(function(arg){
-      if(A.isVarExp(arg)){
-        return E.lookupReference(envir,A.getVarExpId(arg));
+    var args = A.getAppExpArgs(exp).map(function(argument){
+      if(A.isVarExp(argument)){
+        return E.lookupReference(envir,A.getVarExpId(argument));
       }
       else{
-        throw new Error("You have entered something that I do not accept.");
+        throw new Error("Runtime error: You have entered something that I do not accept.");
       }
     });
     if (E.isClo(f)) {
@@ -125,14 +125,19 @@
   }
   function callByCopyRestore(exp,envir) {
     var f = evalExp(A.getAppExpFn(exp),envir);
-    var args = A.getAppExpArgs(exp).map(function(argument){
-      if(A.isVarExp(argument)){
-        return E.lookupReference(envir,A.getVarExpId(argument));
-      }
-      else{
-        throw new Error("You have entered something that I do not accept.");
+    var args = A.getAppExpArgs(exp).map( function (argument) {
+      if (A.isVarExp(argument)) {
+        return E.lookupReference(envir, A.getVarExpId(argument));
+      } else {
+        throw new Error("Runtime error: You have entered something that I do not accept.");
       }
     });
+    var thisCopyMan = args.map(function (argument) { return [ argument[0] ]; });
+    var restoreTHIS = function (l, ll){
+      for(var i=0;i<l.length;i++){
+        l[i][0] = ll[i][0];
+      }
+    };
     if (E.isClo(f)) {
       if (E.getCloParams(f).length !== args.length) {
         throw new Error("Runtime error: wrong number of arguments in " +
@@ -140,7 +145,9 @@
         " expected but " + args.length + " given)");
       } else {
         var values = evalExps(E.getCloBody(f),
-        E.updateWithReferences(E.getCloEnv(f),E.getCloParams(f),args));
+        E.updateWithReferences(E.getCloEnv(f),
+        E.getCloParams(f),thisCopyMan));
+        restoreTHIS(args, thisCopyMan);
         return values[values.length-1];
       }
     } else {
