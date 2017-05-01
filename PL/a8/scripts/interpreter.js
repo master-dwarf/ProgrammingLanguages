@@ -100,12 +100,52 @@
   }
 
   function callByReference(exp,envir) {
-    
+    var f = evalExp(A.getAppExpFn(exp),envir);
+    var args = A.getAppExpArgs(exp).map(function(arg){
+      if(A.isVarExp(arg)){
+        return E.lookupReference(envir,A.getVarExpId(arg));
+      }
+      else{
+        throw new Error("You have entered something that I do not accept.");
+      }
+    });
+    if (E.isClo(f)) {
+      if (E.getCloParams(f).length !== args.length) {
+        throw new Error("Runtime error: wrong number of arguments in " +
+        "a function call (" + E.getCloParams(f).length +
+        " expected but " + args.length + " given)");
+      } else {
+        var values = evalExps(E.getCloBody(f),
+        E.updateWithReferences(E.getCloEnv(f),E.getCloParams(f),args));
+        return values[values.length-1];
+      }
+    } else {
+      throw f + " is not a closure and thus cannot be applied.";
+    }
   }
   function callByCopyRestore(exp,envir) {
-
-    // to be completed
-
+    var f = evalExp(A.getAppExpFn(exp),envir);
+    var args = A.getAppExpArgs(exp).map(function(argument){
+      if(A.isVarExp(argument)){
+        return E.lookupReference(envir,A.getVarExpId(argument));
+      }
+      else{
+        throw new Error("You have entered something that I do not accept.");
+      }
+    });
+    if (E.isClo(f)) {
+      if (E.getCloParams(f).length !== args.length) {
+        throw new Error("Runtime error: wrong number of arguments in " +
+        "a function call (" + E.getCloParams(f).length +
+        " expected but " + args.length + " given)");
+      } else {
+        var values = evalExps(E.getCloBody(f),
+        E.updateWithReferences(E.getCloEnv(f),E.getCloParams(f),args));
+        return values[values.length-1];
+      }
+    } else {
+      throw f + " is not a closure and thus cannot be applied.";
+    }
   }
 
 
