@@ -21,8 +21,8 @@ var connection  = require('express-myconnection'),
 app.use(
 
     connection(mysql,{
-        // host     : '127.0.0.1',	// Use one of these hosts according to your location
-       host     : 'labdb.acs.uwosh.edu',
+        host     : '127.0.0.1',	// tunnel into linux
+        // host     : 'labdb.acs.uwosh.edu', // on the linux machines
         user     : 'hilgeg46',	// Your MySQL user name
         password : '0600646',	// Your MySQL password
         database : 'hilgeg46',	// Your DB name
