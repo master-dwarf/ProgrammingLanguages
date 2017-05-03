@@ -27,7 +27,7 @@ r1.get(function(req,res,next){  // req - request, res - response
     console.log("/students GET");
 
     req.getConnection(function(err,conn){
-        console.log(err);
+
         if (err) return next("Cannot Connect");
 
         var query = conn.query('SELECT * FROM hilgeg46.sutdent_names',function(err,rows){
