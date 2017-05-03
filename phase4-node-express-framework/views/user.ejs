@@ -13,8 +13,6 @@
             <th width="50px">UserID</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Password</th>
-            <th>Action</th>
         </tr>
 
         <% if(data.length){
@@ -22,10 +20,8 @@
          for(var i = 0;i < data.length;i++) { %>
 
         <tr>
-            <td><%=data[i].user_id%></td>
             <td><%=data[i].name%></td>
             <td><%=data[i].email%></td>
-            <td><%=data[i].password%></td>
             <td>
                 <a class="a-inside edit" href="/user/<%=data[i].user_id%>">Edit</a>
 
