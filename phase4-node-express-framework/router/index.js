@@ -30,84 +30,43 @@ r1.get(function(req,res,next){  // req - request, res - response
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query('SELECT * FROM student_names',function(err,rows){
+        var query = conn.query('SELECT first_name, last_name, email FROM student_names',function(err,rows){
 
             if(err){
                 console.log(err);
                 return next("Mysql error, check your query");
             }
-            res.render('Students',{title:"All students",data:rows});
+            res.render('user',{title:"All students",data:rows});
          });
 
     });
 
 });
 
-//The r1 CRUD interface for posting data to DB | POST
-r1.post(function(req,res,next){
-
-    console.log("/user POST");
-
-    //validation
-    req.assert('name','Name is required').notEmpty();
-    req.assert('email','A valid email is required').isEmail();
-    req.assert('password','Enter a password 6 - 20').len(6,20);
-
-    var errors = req.validationErrors();
-    if(errors){
-        res.status(422).json(errors);
-        return;
-    }
-
-    //get data
-    var data = {
-        name:req.body.name,
-        email:req.body.email,
-        password:req.body.password
-     };
-
-    //inserting into mysql
-    req.getConnection(function (err, conn){
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query("INSERT INTO t_user set ? ",data, function(err, rows){
-
-           if(err){
-                console.log(err);
-                return next("Mysql error, check your query");
-           }
-          res.sendStatus(200);
-        });
-     });
-
-});
-
-
 // Route r2 illustrates single parameter user_id route (GET,DELETE,PUT)
-var r2 = router.route('/user/:user_id');
+var r2 = router.route('/user/:term_id');
 
 // route.all is extremely useful. You can use it to do things required
 // for all r2 routes. For example you might need to do a validation
 // everytime route /user/:user_id is hit.
 
 r2.all(function(req,res,next){
-    var user_id = req.params.user_id;
-    console.log("Anything all r2 routes need? You can do it here");
-    console.log(req.params);
+    var term_id = req.params.term_id;
+    // console.log("Anything all r2 routes need? You can do it here");
+    // console.log(req.params);
     next();
 });
 
 //get data to update
 r2.get(function(req,res,next){
 
-    var user_id = req.params.user_id;
+    var term_id = req.params.term_id;
 
     req.getConnection(function(err,conn){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query("SELECT * FROM t_user WHERE user_id = ? ",[user_id],function(err,rows){
+        var query = conn.query("SELECT first_name,last_name,email FROM student_names WHERE term_id = ? ",[term_id],function(err,rows){
 
             if(err){
                 console.log(err);
@@ -118,76 +77,10 @@ r2.get(function(req,res,next){
             if(rows.length < 1)
                 return res.send("User Not found");
 
-            res.render('edit',{title:"Edit user",data:rows});
+            res.render('user',{title:"Students in Term" + term_id,data:rows});
         });
     });
 
-});
-
-//update data
-r2.put(function(req,res,next){
-    var user_id = req.params.user_id;
-
-    //validation
-    req.assert('name','Name is required').notEmpty();
-    req.assert('email','A valid email is required').isEmail();
-    req.assert('password','Enter a password 6 - 20').len(6,20);
-
-    var errors = req.validationErrors();
-    if(errors){
-        res.status(422).json(errors);
-        return;
-    }
-
-    //get data
-    var data = {
-        name:req.body.name,
-        email:req.body.email,
-        password:req.body.password
-     };
-
-    //inserting into mysql
-    req.getConnection(function (err, conn){
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query("UPDATE t_user set ? WHERE user_id = ? ",[data,user_id], function(err, rows){
-
-           if(err){
-                console.log(err);
-                return next("Mysql error, check your query");
-           }
-
-          res.sendStatus(200);
-
-        });
-
-     });
-
-});
-
-//delete data
-r2.delete(function(req,res,next){
-
-    var user_id = req.params.user_id;
-
-     req.getConnection(function (err, conn) {
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query("DELETE FROM t_user  WHERE user_id = ? ",[user_id], function(err, rows){
-
-             if(err){
-                console.log(err);
-                return next("Mysql error, check your query");
-             }
-
-             res.sendStatus(200);
-
-        });
-        //console.log(query.sql);
-
-     });
 });
 
 
