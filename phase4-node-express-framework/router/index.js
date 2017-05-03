@@ -30,7 +30,7 @@ r1.get(function(req,res,next){  // req - request, res - response
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query('SELECT * FROM sutdent_names',function(err,rows){
+        var query = conn.query('SELECT * FROM student_names',function(err,rows){
 
             if(err){
                 console.log(err);
