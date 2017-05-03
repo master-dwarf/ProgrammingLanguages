@@ -19,24 +19,24 @@ router.use(function(req, res, next) {  // req - request, res - response
 });
 
 // Route r1
-var r1 = router.route('/user');
+var r1 = router.route('/students');
 
 //The r1 CRUD interface | GET
 r1.get(function(req,res,next){  // req - request, res - response
 
-    console.log("/user GET");
+    console.log("/students GET");
 
     req.getConnection(function(err,conn){
-
+        console.log(err);
         if (err) return next("Cannot Connect");
 
-        var query = conn.query('SELECT * FROM sutdent_names',function(err,rows){
+        var query = conn.query('SELECT * FROM hilgeg46.sutdent_names',function(err,rows){
 
             if(err){
                 console.log(err);
                 return next("Mysql error, check your query");
             }
-            res.render('user',{title:"RESTful Packer Example",data:rows});
+            res.render('Students',{title:"All students",data:rows});
          });
 
     });
