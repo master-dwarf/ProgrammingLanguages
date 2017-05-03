@@ -24,7 +24,7 @@ app.use(
         host     : '127.0.0.1',	// Use one of these hosts according to your location
 //        host     : 'labdb.acs.uwosh.edu',
         user     : 'hilgeg46',	// Your MySQL user name
-        password : '0600646',	// Your MySQL password
+        password : '600646',	// Your MySQL password
         database : 'hilgeg46',	// Your DB name
         debug    : false  //set to true if you want to see debug logger
     },'request')
