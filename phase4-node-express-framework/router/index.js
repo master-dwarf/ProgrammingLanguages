@@ -19,12 +19,12 @@ router.use(function(req, res, next) {  // req - request, res - response
 });
 
 // Route r1
-var r1 = router.route('/students');
+var r1 = router.route('/user');
 
 //The r1 CRUD interface | GET
 r1.get(function(req,res,next){  // req - request, res - response
 
-    console.log("/students GET");
+    console.log("/user GET");
 
     req.getConnection(function(err,conn){
 
