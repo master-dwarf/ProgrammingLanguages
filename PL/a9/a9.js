@@ -33,8 +33,12 @@ var hailstone = function (n) {
 
 var merge = function (s1, s2) {
 
-    /* to be completed */
-
+    if(is.hd(s1) > is.hd(s2))
+      return is.cons(is.hd(s2), function() { return merge(s1, is.tl(s2)) });
+    else if(is.hd(s1) < is.hd(s2))
+      return is.cons(is.hd(s1), function() { return merge(is.tl(s1), s2) });
+    else
+      return is.cons(is.hd(s1), function() { return merge(is.tl(s1), is.tl(s2)) });
 };
 
 ////// Problem 3 /////////////////
