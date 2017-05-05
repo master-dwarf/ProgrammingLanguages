@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%=title%></title>
+        <script type="text/javascript" src="/../js/jquery-1.10.2.min.js"></script>
+        <link rel="stylesheet" href="/../css/style.css">
+    </head>
+<body>
+<h1> FTE Data </h1>
+<div class="data-table">
+    <table border="1" cellpadding="7" cellspacing="7">
+        <tr>
+            <th>Students going for Bachelor FTE</th>
+            <th>Students going fot Master FTE</th>
+        </tr>
+
+        <% if(data.length){
+
+         for(var i = 0;i < data.length;i++) { %>
+
+        <tr>
+            <td><%=data[i].bachelorFTE%></td>
+            <td><%=data[i].mastersFTE%></td>
+        </tr>
+    <% }
+
+     }else{ %>
+         <tr>
+            <td colspan="5">No Data</td>
+         </tr>
+    <% } %>
+
+    </table>
+</div>
+<div class="page-data">
+     <ul class="err-area"></ul>
+</div>
+</body>
+</html>

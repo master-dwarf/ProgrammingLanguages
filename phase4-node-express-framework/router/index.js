@@ -19,94 +19,55 @@ router.use(function(req, res, next) {  // req - request, res - response
 });
 
 // Route r1
-var r1 = router.route('/user');
+var r1 = router.route('/param_test');
+
+r1.all(function(req,res,next){
+    next();
+});
 
 //The r1 CRUD interface | GET
 r1.get(function(req,res,next){  // req - request, res - response
 
-    console.log("/user GET");
+    var citizenship = req.param("citizenship");
 
     req.getConnection(function(err,conn){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query('SELECT first_name, last_name, email FROM student_names',function(err,rows){
+        var query = conn.query('select t4.email as email, t4.first_name as first_name, t4.last_name as last_name, t4.institue_name as firstChoice, t5.institue_name as secondChoice from institutes as t5 inner join (select t3.email, t3.first_name, t3.last_name, t3.sending_institute_id, t4.institue_name, t3.institute_id_2 from institutes as t4 inner join (select t1.email, t1.first_name, t1.last_name, t1.sending_institute_id, t2.institute_id_1, t2.institute_id_2 from student_choice_of_schools as t2 inner join (select t1.email, t1.first_name, t1.last_name, t1.sending_institute_id from student_names as t1 where t1.citizenship <> ?) as t1 where t2.students_email = t1.email) as t3 where t4.institute_ID = t3.institute_id_1) as t4 where t5.institute_ID = t4.institute_id_2 order by t4.sending_institute_id',[citizenship], function(err,rows){
 
             if(err){
                 console.log(err);
                 return next("Mysql error, check your query");
             }
-            res.render('user',{title:"All students",data:rows});
+            if(rows.length < 1)
+                return res.send("Country Not found");
+
+            res.render('student',{title:"All Students for" + citizenship,data:rows});
          });
 
     });
 
 });
 
-// Route r2 illustrates single parameter user_id route (GET,DELETE,PUT)
-var r2 = router.route('/user/:term_id');
-
-// route.all is extremely useful. You can use it to do things required
-// for all r2 routes. For example you might need to do a validation
-// everytime route /user/:user_id is hit.
-
-r2.all(function(req,res,next){
-    var term_id = req.params.term_id;
-    // console.log("Anything all r2 routes need? You can do it here");
-    // console.log(req.params);
-    next();
-});
-
-//get data to update
-r2.get(function(req,res,next){
-
-    var term_id = req.params.term_id;
-
-    req.getConnection(function(err,conn){
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query("SELECT first_name,last_name,email FROM student_names WHERE term_id = ? ",[term_id],function(err,rows){
-
-            if(err){
-                console.log(err);
-                return next("Mysql error, check your query");
-            }
-
-            //if user not found
-            if(rows.length < 1)
-                return res.send("User Not found");
-
-            res.render('user',{title:"Students in Term" + term_id,data:rows});
-        });
-    });
-
-});
-
-
 // Route r3 illustrates a fully  paramterized GET route
 var r3 = router.route('/param_test');
 
 r3.all(function(req,res,next){
-    console.log("Done for all r3 routes ");
     next();
 });
 
 //get data to display based on params
 r3.get(function(req,res,next){
-
-    console.log("r3 GET ");
-    var user_email = req.param('email');
-    console.log("email " + user_email);
-    var user_name = req.param('name');
-    console.log("name " + user_name);
+    var citizenship = req.param('citizenship');
+    var term_id = req.param('term_id');
 
     // Sample request: http://localhost:3000/param_test?name=Randall+Cobb&email=nelson@gmail.com
     req.getConnection(function(err,conn){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query("SELECT * FROM t_user WHERE email = ? OR name = ? ",[user_email, user_name],function(err,rows){
+        var query = conn.query("select round(bachelors,4) as bachelorFTE, round(masters,4) as mastersFTE from (select sum(t1.undergrad_FTE) as bachelors from student_names as t1 where t1.citizenship <> ? and term_id = ?) as t1 join (select sum(t2.G_FTE_withdrawl) as masters from student_names as t2 where t2.citizenship <> ? and term_id = ?) as t2", [citizenship, term_id, citizenship, term_id], function(err,rows){
 
             if(err){
                 console.log(err);
@@ -115,9 +76,9 @@ r3.get(function(req,res,next){
 
             //if user not found
             if(rows.length < 1)
-                return res.send("User Not found");
+                return res.send("Term ID or Country Not found");
 
-            res.render('user',{title:"Sample of using params",data:rows});
+            res.render('FTE',{title:"FTE data for "+citizenship+" Students in term "+term_id,data:rows});
         });
     });
 });

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%=title%></title>
+        <script type="text/javascript" src="/../js/jquery-1.10.2.min.js"></script>
+        <link rel="stylesheet" href="/../css/style.css">
+    </head>
+<body>
+<h1> Student Data </h1>
+<div class="data-table">
+    <table border="1" cellpadding="7" cellspacing="7">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>First Institute Choice</th>
+            <th>Second Institute Choice</th>
+        </tr>
+
+        <% if(data.length){
+
+         for(var i = 0;i < data.length;i++) { %>
+
+        <tr>
+            <td><%=data[i].first_name +" "+ data[i].last_name%></td>
+            <td><%=data[i].email%></td>
+            <td><%=data[i].firstChoice%></td>
+            <td><%=data[i].secondChoice%></td>
+        </tr>
+    <% }
+
+     }else{ %>
+         <tr>
+            <td colspan="5">No Data</td>
+         </tr>
+    <% } %>
+
+    </table>
+</div>
+<div class="page-data">
+     <ul class="err-area"></ul>
+</div>
+</body>
+</html>
