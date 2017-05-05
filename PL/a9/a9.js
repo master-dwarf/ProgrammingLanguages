@@ -25,9 +25,7 @@ var evens = is.filter(function (n) { return (n % 2 === 0); }, is.from(1));
 /////// Problem 1 //////////////////////
 
 var hailstone = function (n) {
-
-    /* to be completed */
-
+  return is.cons(n, function(){return (n%2==0 ? (hailstone(n/2)) : (hailstone(3*n+1)))})
 };
 
 
