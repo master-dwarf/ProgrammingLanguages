@@ -43,15 +43,18 @@ var merge = function (s1, s2) {
 
 ////// Problem 3 /////////////////
 
-//// Note that strange_sequence is the result of calling on an
-//// anonymous function that, when called, produces the desired
-//// sequence -- similar to the way that we bound the sequence of all
-//// prime numbers to the variable primes in the class notes
+// Note that strange_sequence is the result of calling on an
+// anonymous function that, when called, produces the desired
+// sequence -- similar to the way that we bound the sequence of all
+// prime numbers to the variable primes in the class notes
 
+// 1 is part of the list
+// 2 times any number is in the list
+// 3 times any number is in the list
+// 5 times any number is in the list
 var strange_sequence = function () {
-
     /* to be completed */
-
+    var x = 1;
 }();
 
 
