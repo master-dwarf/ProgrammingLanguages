@@ -54,7 +54,15 @@ var merge = function (s1, s2) {
 // 5 times any number is in the list
 var strange_sequence = function () {
     /* to be completed */
-    var x = 1;
+    var helper_1 = function(x){
+	    
+    }
+    var helper_2 = function(x){
+	    
+    }
+    var helper_3 = function(x){
+	    
+    }
 }();
 
 
