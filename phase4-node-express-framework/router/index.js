@@ -19,7 +19,8 @@ router.use(function(req, res, next) {  // req - request, res - response
 });
 
 // Route r1
-var r1 = router.route('/param_test');
+var r1 = router.route('/students');
+// /param_test?citizenship=United+States
 
 r1.all(function(req,res,next){
     next();
@@ -51,7 +52,8 @@ r1.get(function(req,res,next){  // req - request, res - response
 });
 
 // Route r3 illustrates a fully  paramterized GET route
-var r3 = router.route('/param_test');
+var r3 = router.route('/fte');
+// /param_test?citizenship=United+States&term_id=2
 
 r3.all(function(req,res,next){
     next();
@@ -62,7 +64,6 @@ r3.get(function(req,res,next){
     var citizenship = req.param('citizenship');
     var term_id = req.param('term_id');
 
-    // Sample request: http://localhost:3000/param_test?name=Randall+Cobb&email=nelson@gmail.com
     req.getConnection(function(err,conn){
 
         if (err) return next("Cannot Connect");

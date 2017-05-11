@@ -25,9 +25,7 @@ var evens = is.filter(function (n) { return (n % 2 === 0); }, is.from(1));
 /////// Problem 1 //////////////////////
 
 var hailstone = function (n) {
-
-    /* to be completed */
-
+  return is.cons(n, function(){return (n%2==0 ? (hailstone(n/2)) : (hailstone(3*n+1)))})
 };
 
 
@@ -35,21 +33,33 @@ var hailstone = function (n) {
 
 var merge = function (s1, s2) {
 
-    /* to be completed */
-
+    if(is.hd(s1) > is.hd(s2))
+      return is.cons(is.hd(s2), function() { return merge(s1, is.tl(s2)) });
+    else if(is.hd(s1) < is.hd(s2))
+      return is.cons(is.hd(s1), function() { return merge(is.tl(s1), s2) });
+    else
+      return is.cons(is.hd(s1), function() { return merge(is.tl(s1), is.tl(s2)) });
 };
 
 ////// Problem 3 /////////////////
 
-//// Note that strange_sequence is the result of calling on an
-//// anonymous function that, when called, produces the desired
-//// sequence -- similar to the way that we bound the sequence of all
-//// prime numbers to the variable primes in the class notes
+// Note that strange_sequence is the result of calling on an
+// anonymous function that, when called, produces the desired
+// sequence -- similar to the way that we bound the sequence of all
+// prime numbers to the variable primes in the class notes
 
+// 1 is part of the list
+// 2 times any number is in the list
+// 3 times any number is in the list
+// 5 times any number is in the list
 var strange_sequence = function () {
-
     /* to be completed */
-
+    var helper_1 = function(x){
+      return merge(merge(is.cons(x*2,function(){return helper_1(x*2)}),
+                         is.cons(x*3,function(){return helper_1(x*3)})),
+                         is.cons(x*5,function(){return helper_1(x*5)}));
+    }
+    return is.cons(1,function(){return helper_1(1)});
 }();
 
 
