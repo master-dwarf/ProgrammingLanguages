@@ -55,14 +55,11 @@ var merge = function (s1, s2) {
 var strange_sequence = function () {
     /* to be completed */
     var helper_1 = function(x){
-	    
+      return merge(merge(is.cons(x*2,function(){return helper_1(x*2)}),
+                         is.cons(x*3,function(){return helper_1(x*3)})),
+                         is.cons(x*5,function(){return helper_1(x*5)}));
     }
-    var helper_2 = function(x){
-	    
-    }
-    var helper_3 = function(x){
-	    
-    }
+    return is.cons(1,function(){return helper_1(1)});
 }();
 
 
